@@ -1,0 +1,46 @@
+/* This is a template file, fill it with your parameters.
+   Commented params are optional (Please refer to ASN1
+   3gpp specification.
+ */
+{
+  message c1: systemInformation: {
+    criticalExtensions systemInformation-r8: {
+      sib-TypeAndInfo {
+        sib5: {
+          interFreqCarrierFreqList {
+            {
+              dl-CarrierFreq 300,
+
+              q-RxLevMin -61,
+              /* p-Max 23, */
+              t-ReselectionEUTRA 1,
+              t-ReselectionEUTRA-SF {
+                sf-Medium oDot25,
+                sf-High oDot25
+              },
+              threshX-High 0,
+              threshX-Low 0,
+              allowedMeasBandwidth mbw50,
+              presenceAntennaPort1 FALSE,
+              /* cellReselectionPriority 0, */
+              neighCellConfig '01'B
+              /* q-OffsetFreq dB0, */
+              /* interFreqNeighCellList {
+                {
+                  physCellId 1,
+                  q-OffsetCell dB0
+                }
+              },*/
+              /* interFreqBlackCellList {
+                {
+                  start 1,
+                  range n4
+                }
+              } */
+            }
+          }
+        }
+      }
+    }
+  }
+}

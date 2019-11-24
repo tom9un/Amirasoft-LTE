@@ -1,0 +1,46 @@
+/* MeasConfig ASN.1 object for RRCConnnection reconfiguration */
+{
+  measObjectToAddModList {
+    {
+      measObjectId 1,
+      measObject measObjectEUTRA: {
+        carrierFreq 3350, /* automatically patched by eNodeB if set to 0 */
+        allowedMeasBandwidth mbw25, /* automatically patched by eNodeB if carrierFreq is set to 0 */
+        presenceAntennaPort1 FALSE,
+        neighCellConfig '01'B, /* no MBSFN present */
+        offsetFreq dB0
+      }
+    }
+  },
+  reportConfigToAddModList {
+    {
+      reportConfigId 1,
+      reportConfig reportConfigEUTRA: {
+        triggerType event: {
+          eventId eventA3: {
+            a3-Offset 0,
+            reportOnLeave FALSE
+          },
+          hysteresis 0,
+          timeToTrigger ms640
+        },
+        triggerQuantity rsrp,
+        reportQuantity both,
+        maxReportCells 1,
+        reportInterval ms1024,
+        reportAmount r1
+      }
+    }
+  },
+  measIdToAddModList {
+    {
+      measId 1,
+      measObjectId 1,
+      reportConfigId 1
+    }
+  },
+  quantityConfig {
+    quantityConfigEUTRA {
+    }
+  }
+}

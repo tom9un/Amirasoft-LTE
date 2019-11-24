@@ -1,0 +1,253 @@
+AMARISOFT SOFTWARE LICENSE TERMS
+NOTICE: THIS AMARISOFT SOFTWARE PRODUCT, TOGETHER WITH ITS
+ACCOMPANYING DOCUMENTATION, (THE "PRODUCT") IS THE PROPERTY OF
+AMARISOFT. THE PRODUCT IS MADE AVAILABLE TO YOU, THE ORIGINAL
+PURCHASER, SUBJECT TO THE FOLLOWING LICENSE AGREEMENT ("LICENSE
+AGREEMENT"). PLEASE READ THIS LICENSE CAREFULLY BEFORE INSTALLING
+OR USING THE PRODUCT. A COPY OF THIS LICENSE IS AVAILABLE FOR YOUR
+FUTURE REFERENCE IN THE "LICENSE.TXT" FILE PROVIDED WITH THE
+PRODUCT.
+IF YOU DO NOT AGREE TO THE TERMS AND CONDITIONS OF THIS AGREEMENT
+AND THE TERMS AND CONDITIONS OF ANY APPLICABLE LICENSE AGREEMENTS
+OR NOTICES INDICATED OR REFERENCED BELOW, THEN YOU MAY NOT USE THE
+PRODUCT. ANY USE BY YOU OF THIS PRODUCT ALSO CONSTITUTES YOUR
+ACCEPTANCE OF THESE TERMS.
+AMARISOFT is only willing to grant you a license under this License Agreement if you
+obtained the Product from AMARISOFT or a AMARISOFT authorized distributor or reseller.
+If you obtained the Product from any other source you may not install or use the Product.
+
+
+1. GRANT OF LICENSE AND SCOPE OF USE
+
+1.1 Licenses For each license that you acquire to use the Product, you will be provided
+with a License Certificate (a "License Certificate"), which may be either a certificate, the
+installation and licensing instructions, your invoice, or an activation file and which may be
+provided to you either with the Product media or separately by AMARISOFT or its
+authorized distributors or resellers. The License Certificate will contain information specific
+to the Product, the type of license under which you may use the Product and the number
+of licenses that you have acquired. In order to activate and use the Product as set forth in
+this License Agreement, you must follow the instructions when prompted by the Product.
+The type of license you may acquire is a CPU License, all defined in this Section 1 of this
+License Agreement. Unless your License Certificate identifies your acquisition of another
+license type, you have acquired a CPU License. For more information on which license
+types, if any, should be included with the Product media you should contact AMARISOFT
+or your AMARISOFT authorized distributor or reseller.
+
+1.2 CPU Grant of License The terms of this Section 1.2 are applicable to you only if you
+have purchased a CPU License, as defined below, for the Product directly from
+AMARISOFT or a AMARISOFT authorized distributor or reseller. Subject to the terms and
+conditions of this License, AMARISOFT grants to you, if you are an individual, or, if you are
+an entity, a personal, non exclusive, non transferable and limited license to use the
+Product solely with one (1) designated single CPU (Central Processing Unit) Personal
+Computer, with a maximum of 4 cores, in your organization ("CPU"). You may purchase
+from AMARISOFT or an AMARISOFT authorized distributor or reseller additional licenses
+to permit multiple CPU to use the Product (each, a "CPU License"). The foregoing CPU
+Licenses shall be for access and use, only by the equivalent number of CPU for whom you
+have paid the applicable license fees and obtained a License Key Certificate. The Product
+may be used exclusively by the specifically designated CPU, subject to all the terms and
+conditions of this License Agreement. You agree that you will not designate more CPU
+than the number of CPU Licenses that AMARISOFT or a AMARISOFT authorizeddistributor or
+reseller has expressly granted to you and you will not allow the Product to be
+used by any CPU other than the CPU designated by you from time to time. Subject to the
+other terms and conditions of this License, you may make a reasonable number of copies
+of the Product to backup devices such as hard disks, optical media, or tape and one (1)
+physical CD media backup copy of the Product solely to replace the original copy provided
+to you if the original copy is damaged or destroyed. All rights not specifically granted to you
+herein are retained by AMARISOFT.
+
+
+2. SPECIAL TERMS
+The following terms and conditions ("Special Terms") are specific to certain editions,
+versions and components of the Product and are in addition to the provisions of Section 1.
+If any provision of the Special Terms applicable to the Product conflicts with any other
+provision of this License, then the provision of the Special Terms will supercede and
+control.
+
+2.1 ADDITIONAL LICENSE TERMS APPLICABLE TO THIRD PARTY SOFTWARE
+Certain components of the Product use or incorporate third-party software programs
+and/or libraries ("Third-Party Software"), which are loaded (in both object and source code
+form) on the Product media. You agree that AMARISOFT's third-party licensors and
+suppliers are intended third party beneficiaries of all terms and conditions of this License
+intended to protect intellectual property rights in the Product (including the Third-Party
+Software) and limit certain uses thereof.
+
+
+3. LIMITATIONS
+You may not: (a) modify, adapt, alter, translate, or create derivative works of the Product or
+merge the Product with other software other than as described in the Product's
+accompanying documentation or as approved of in writing by AMARISOFT; (b) lease, rent
+or loan the Product to any third party; (c) sublicense, distribute or otherwise transfer the
+Product or any component thereof to any third party except as expressly authorized in this
+Agreement; (d) reverse engineer, decompile, disassemble, or otherwise attempt to derive
+the source code of the Product; (e) remove, alter, or obscure any confidentiality or
+proprietary notices (including copyright and trademark notices) of AMARISOFT or its
+licensors or suppliers on or accompanying the Product; (f) allow third parties to access or
+use the Product including but not limited to using the Product in a time-sharing
+arrangement, operating the Product as part of a service bureau or, except as expressly
+authorized under Sections 1 and 2 otherwise using the Product for the use or benefit of
+third parties; (g) reproduce or use the Product except as expressly authorized under
+Sections 1 and 2; or (h) disclose or publish performance benchmark results for the
+Product. The rights granted under this License apply only to this Product. You must
+procure a separate license to use other AMARISOFT software. Furthermore, you may not
+permit end users of the Product ("End Users") to conduct the restricted activities limited by
+items (a) through (e), (g) and (h) above insofar as they apply to certain files, libraries
+and/or source code specifically designated as "redistributables" by AMARISOFT in the
+accompanying printed or on-line documentation and that are necessary to use your own
+application programs and other works created using the Product ("Redistributables"), and
+such End User's sublicense rights to the Redistributables are conditioned upon compliance
+with such limitations. The limitations in this Section 3 apply equally to your use of the
+Product, in whole or in part, including any component or Redistributable.
+
+
+4. LIMITED WARRANTY AND DISCLAIMER
+AMARISOFT warrants to you, the original purchaser and to no other party, that any
+physical media included with the Product, as and when provided to you, will be free of
+physical defects in materials and workmanship for a period of thirty (30) days after the date
+that you initially acquire the Product. Your exclusive remedy and AMARISOFT's sole
+liability for breach of this warranty is that AMARISOFT will replace any defective media
+returned to AMARISOFT within the thirty (30) day warranty period. This warranty does not
+apply to damages resulting from misuse, abuse or neglect. Any replacement media will be
+warranted as above for the remainder of the original warranty period or twenty (20) days
+from the date we ship it to you, whichever is longer. EXCEPT FOR THIS EXPRESS
+LIMITED WARRANTY, THE PRODUCT IS PROVIDED "AS IS" AND WITHOUT
+WARRANTY OF ANY KIND. AMARISOFT HEREBY EXCLUDES AND DISCLAIMS ALL
+IMPLIED OR STATUTORY WARRANTIES, INCLUDING ANY WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, QUALITY, NON-
+INFRINGEMENT, TITLE, RESULTS, EFFORTS OR QUIET ENJOYMENT. THERE IS NO
+WARRANTY THAT THE PRODUCT WILL BE ERROR-FREE OR WILL FUNCTION
+WITHOUT INTERRUPTION. YOU ASSUME THE ENTIRE RISK FOR THE RESULTS
+OBTAINED USING THE PRODUCT. TO THE EXTENT THAT AMARISOFT MAY NOT
+DISCLAIM ANY WARRANTY AS A MATTER OF APPLICABLE LAW, THE SCOPE AND
+DURATION OF SUCH WARRANTY WILL BE THE MINIMUM PERMITTED UNDER SUCH
+LAW.
+
+
+5. SERVICES; UPDATES; PRODUCT CHANGES
+AMARISOFT is not required under this License Agreement to provide any installation,
+training or other services to you. Such services, if available, must be purchased separately.
+If, pursuant to a separate support agreement or otherwise, AMARISOFT provides you with
+a new release, error correction, update, upgrade or other modification to the Product, such
+modification will be deemed part of the Product, and subject to the terms of this License
+Agreement, unless the modification is expressly provided subject to a separate license
+agreement. AMARISOFT reserves the right at any time not to release or to discontinue
+release of any Product and to alter prices, features, specifications, capabilities, functions,
+licensing terms, release dates, general availability or other characteristics of any future
+releases of the Product.
+
+
+6. REGISTRATION
+You must register the Product with AMARISOFT as a condition to your rights to use the
+Product. You will be asked to provide identification information on CPU (serial number,
+internal inventory number, other) you plan to install the PRODUCT on.
+
+
+7. CONFIDENTIALITY
+You acknowledge that if part of the Product in source code form exists, it remains a
+confidential trade secret of AMARISOFT. You agree to hold this information in confidence,
+not disclose it to any person, and not use it for any purpose other than the use and
+operation of the Product as permitted under this License Agreement.
+
+
+8. LIMITATION OF LIABILITY
+IN NO EVENT WILL AMARISOFT BE LIABLE TO ANY PARTY FOR ANY INDIRECT,
+INCIDENTAL, CONSEQUENTIAL, EXEMPLARY, SPECIAL OR PUNITIVE DAMAGES,INCLUDING ANY LOSS OF PROFIT, REVENUE, BUSINESS OPPORTUNITY OR DATA,
+ARISING FROM OR RELATING TO THIS LICENSE AGREEMENT OR THE PRODUCT,
+WHETHER IN CONTRACT, IN TORT, NEGLIGENCE OR OTHERWISE, EVEN IF
+AMARISOFT KNEW, SHOULD HAVE KNOWN OR HAS BEEN ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGES. AMARISOFT'S TOTAL CUMULATIVE LIABILITY
+ARISING FROM OR RELATED TO THIS LICENSE AGREEMENT OR THE PRODUCT,
+WHETHER IN CONTRACT, IN TORT OR OTHERWISE, WILL NOT EXCEED THE FEES
+ACTUALLY PAID BY YOU UNDER THIS LICENSE AGREEMENT. THIS SECTION 8 WILL
+APPLY EVEN IF AN EXCLUSIVE REMEDY HEREUNDER HAS FAILED OF ITS
+ESSENTIAL PURPOSE.
+
+
+9. TERM AND TERMINATION
+
+9.1 Term The term of this License Agreement will begin as of the date that you receive
+the Product and will remain in effect unless terminated under this Section 9.
+
+9.2 Termination for Convenience You may terminate this License Agreement for any
+reason, or for no reason, by giving AMARISOFT five (5) days's written notice.
+
+9.3 Termination for Cause AMARISOFT may terminate this License Agreement if you
+breach your obligations hereunder. AMARISOFT will effect such termination by giving you
+notice of termination, specifying therein the alleged breach. If your breach is curable, you
+will have a grace period of thirty (30) days after such notice is served to cure the breach
+described therein. If the breach is cured within the thirty (30) day grace period, then this
+License Agreement will remain in effect; otherwise, this License Agreement will
+automatically terminate upon the conclusion of the thirty (30) day grace period.
+
+9.4 Effect of Termination Upon the termination of this License Agreement for any
+reason the following terms shall apply: (a) all rights granted under this License Agreement
+will immediately terminate and you must stop all use of the Product and any
+Redistributables; (b) you must return to AMARISOFT or destroy all copies of the Product
+provided to or made by you, and will, within ten (10) days after the effective date of
+termination, provide AMARISOFT with written certification that all such copies have been
+returned or destroyed; and (c) all provisions of this License Agreement with the exception
+of the licenses granted in Sections 1 and 2, will survive termination of this License
+Agreement for any reason.
+
+
+10. GENERAL PROVISIONS
+
+10.1 Audit If you are entering into this license as an entity other than an individual (e.g,
+as a corporation, a partnership, or other organization), during the term of this License and
+for three (3) years thereafter, AMARISOFT or its outside auditors will have the right to
+conduct an audit of your records and computer systems to verify that you have paid to
+AMARISOFT the correct amounts owed under this License and determine whether the
+Products are being used in accordance with the terms of this License. Any audit will be
+conducted during regular business hours at your facilities, with reasonable notice. You
+agree to provide the audit team access to the relevant records and facilities and to provide
+reasonable assistance to AMARISOFT in connection with this provision. You agree to pay
+the cost of the audit if any underpayments during the period covered by the audit amount
+to more than five percent (5%) of the fees actually owed or if the number of deployments
+of the Products is more than five percent (5%) of that licensed.
+10.2 Hazardous Uses The Product is not intended for use in connection with any
+application requiring fail-safe performance such as the operation of nuclear power
+facilities, air traffic control or navigation systems, weapons control systems, life supportsystems, or any other system whose failure could lead to injury, death, environmental
+damage or mass destruction. You agree that AMARISOFT will have no liability of any
+nature, and you are solely responsible, for any expense, loss, injury or damage incurred as
+a result of such use of the Product.
+
+10.3 Entire License; Severability This License Agreement constitutes the entire, final
+and exclusive agreement between you and AMARISOFT regarding the specific license
+transaction described herein. If any provision of this License Agreement is held to be
+illegal, invalid or unenforceable for any reason, then such provision will be enforced to the
+maximum extent permissible and the remainder of the provisions of
+this License Agreement will remain in full force and effect.
+
+10.4 Assignment
+You may not transfer the Product media, assign
+this License Agreement or assign any of your rights or delegate any of your
+obligations under this License Agreement, by operation of law or otherwise (including
+by merger, sale of assets or consolidation), without AMARISOFT's prior written
+consent. Any attempted assignment in violation of this Section 10.3 will be void.
+10.5 Export Control You may not directly or indirectly transfer the Product, including its
+documentation, to any country if such transfer would be prohibited by applicable law. You agree
+to the foregoing and you are representing and warranting that you are not located in, under
+the control of, or a national or resident of any such country. You will be solely responsible
+for identifying and complying with all laws of any jurisdiction regarding the import, export or
+use of Products and technical data supplied by AMARISOFT. You will obtain at your own
+expense all licenses, permits or approvals required by any government to use the Product.
+10.6 Waiver and Modifications All waivers must be in writing. Any waiver or failure to
+enforce a provision of this License Agreement on one occasion shall not be deemed a
+waiver of any other provision or such provision on any other occasion. This License
+Agreement may only be amended by a written document signed by both parties.
+
+11. Cryptography
+Content may contain encryption software. The country in which you are currently may have
+restrictions on the import, possession, and use, and/or re-export to another country, of
+encryption software. BEFORE using any encryption software, please check the country's
+laws, regulations and policies concerning the import, possession, or use, and re-export of
+encryption software, to see if this is permitted.
+
+12. Non Recurring Engineering
+The intellectual property of all items designed, developed and manufactured by AMARISOFT
+resides with AMARISOFT. The payment of Non Recurring Engineering (NRE) charges by you
+does not confer any rights to the intellectual property of any designs which emanate directly or
+indirectly from the development. As part of any contract, whether it includes the payment of NRE
+or not, you must accept without reservation that AMARISOFT is the rightful owner of all intellec-
+tual property rights for products which are supplied under contract or standard supplies to you.
+You must not copy, or allow any third party to copy the designs of any AMARISOFT's products.
+

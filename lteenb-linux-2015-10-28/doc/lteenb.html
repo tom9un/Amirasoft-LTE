@@ -1,0 +1,2857 @@
+<html lang="en">
+<head>
+<title>LTE Software eNodeB</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="LTE Software eNodeB">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="top" href="#Top">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+   <div class="contents">
+<h2>Table of Contents</h2>
+<ul>
+<li><a name="toc_TOC0" href="#TOC0">1 Introduction</a>
+<li><a name="toc_TOC1" href="#TOC1">2 Features</a>
+<ul>
+<li><a href="#TOC2">2.1 PHY layer</a>
+<li><a href="#TOC3">2.2 Protocol Layer</a>
+<li><a href="#TOC4">2.3 Network interface</a>
+<li><a href="#TOC5">2.4 User interface</a>
+</li></ul>
+<li><a name="toc_TOC6" href="#TOC6">3 Requirements</a>
+<ul>
+<li><a href="#TOC7">3.1 Hardware requirements</a>
+<li><a href="#TOC8">3.2 Software requirements</a>
+</li></ul>
+<li><a name="toc_TOC9" href="#TOC9">4 Off-The-Shelf package</a>
+<li><a name="toc_TOC10" href="#TOC10">5 Installation</a>
+<ul>
+<li><a href="#TOC11">5.1 Linux setup</a>
+<li><a href="#TOC12">5.2 RRH setup</a>
+<ul>
+<li><a href="#TOC13">5.2.1 USRP N200/N210 setup</a>
+<li><a href="#TOC14">5.2.2 USRP B200/B210 setup</a>
+<li><a href="#TOC15">5.2.3 X300/X310 setup</a>
+<li><a href="#TOC16">5.2.4 PCIe SDR</a>
+<ul>
+<li><a href="#TOC17">5.2.4.1 Compilation and installation</a>
+<li><a href="#TOC18">5.2.4.2 Driver initialization</a>
+<li><a href="#TOC19">5.2.4.3 Connectors</a>
+</li></ul>
+<li><a href="#TOC20">5.2.5 Nutaq PicoSDR 2x2</a>
+</li></ul>
+<li><a href="#TOC21">5.3 Linux setup for best performance</a>
+<li><a href="#TOC22">5.4 UE setup</a>
+<li><a href="#TOC23">5.5 LTEMME installation</a>
+<ul>
+<li><a href="#TOC24">5.5.1 Basic LTEMME configuration</a>
+<li><a href="#TOC25">5.5.2 License key installation</a>
+</li></ul>
+<li><a href="#TOC26">5.6 LTEENB installation</a>
+<ul>
+<li><a href="#TOC27">5.6.1 Basic LTEENB configuration</a>
+<li><a href="#TOC28">5.6.2 RRH selection</a>
+<li><a href="#TOC29">5.6.3 License key installation</a>
+</li></ul>
+<li><a href="#TOC30">5.7 Initial testing</a>
+</li></ul>
+<li><a name="toc_TOC31" href="#TOC31">6 Troubleshooting</a>
+<ul>
+<li><a href="#TOC32">6.1 LTEENB does not start</a>
+<li><a href="#TOC33">6.2 UHD library ABI compatibility mismatch</a>
+<li><a href="#TOC34">6.3 The license key file is not correct</a>
+<li><a href="#TOC35">6.4 Many messages 'UHD status: L=X U=Y S=Z' are displayed.</a>
+<li><a href="#TOC36">6.5 The initial PRACH signal is not received.</a>
+<li><a href="#TOC37">6.6 The initial PRACH is received, but the UE is never attached.</a>
+<li><a href="#TOC38">6.7 The initial attach is OK but <code>ping</code> is not working.</a>
+<li><a href="#TOC39">6.8 The ping is working but no Internet access is possible from the UE.</a>
+</li></ul>
+<li><a name="toc_TOC40" href="#TOC40">7 Advanced Configuration</a>
+<ul>
+<li><a href="#TOC41">7.1 Logging</a>
+<li><a href="#TOC42">7.2 Changing the LTE bandwidth</a>
+<li><a href="#TOC43">7.3 CPU load limitation</a>
+<li><a href="#TOC44">7.4 UE connection traces</a>
+<li><a href="#TOC45">7.5 UE Power control</a>
+<li><a href="#TOC46">7.6 Multi-cell support</a>
+<ul>
+<li><a href="#TOC47">7.6.1 Intra-band multi-cell</a>
+<li><a href="#TOC48">7.6.2 Inter-band multi-cell</a>
+</li></ul>
+<li><a href="#TOC49">7.7 Handover support</a>
+<li><a href="#TOC50">7.8 MIMO support</a>
+<li><a href="#TOC51">7.9 MIMO environment setup</a>
+<ul>
+<li><a href="#TOC52">7.9.1 Over the air</a>
+<li><a href="#TOC53">7.9.2 Using cable</a>
+<ul>
+<li><a href="#TOC54">7.9.2.1 FDD</a>
+<li><a href="#TOC55">7.9.2.2 TDD</a>
+</li></ul>
+</li></ul>
+<li><a href="#TOC56">7.10 TDD support</a>
+</li></ul>
+<li><a name="toc_TOC57" href="#TOC57">8 Configuration reference</a>
+<ul>
+<li><a href="#TOC58">8.1 Configuration file syntax</a>
+<li><a href="#TOC59">8.2 Global properties</a>
+<li><a href="#TOC60">8.3 Advanced properties</a>
+<li><a href="#TOC61">8.4 Radio driver configuration</a>
+<ul>
+<li><a href="#TOC62">8.4.1 Dummy driver</a>
+<li><a href="#TOC63">8.4.2 UHD driver</a>
+</li></ul>
+<li><a href="#TOC64">8.5 Cell configuration</a>
+<ul>
+<li><a href="#TOC65">8.5.1 Basic parameters</a>
+<li><a href="#TOC66">8.5.2 Advanced parameters</a>
+</li></ul>
+<li><a href="#TOC67">8.6 DRB configuration</a>
+<li><a href="#TOC68">8.7 MBMS configuration</a>
+</li></ul>
+<li><a name="toc_TOC69" href="#TOC69">9 Remote API</a>
+<ul>
+<li><a href="#TOC70">9.1 Messages</a>
+<li><a href="#TOC71">9.2 Common messages</a>
+<li><a href="#TOC72">9.3 Errors</a>
+<li><a href="#TOC73">9.4 Common examples</a>
+<li><a href="#TOC74">9.5 LTE messages</a>
+</li></ul>
+<li><a name="toc_TOC75" href="#TOC75">10 Command line monitor reference</a>
+<li><a name="toc_TOC76" href="#TOC76">11 Log file format</a>
+<ul>
+<li><a href="#TOC77">11.1 PHY, MAC, RLC, PDCP, RRC and NAS layers</a>
+<li><a href="#TOC78">11.2 S1AP, X2AP and GTP-U layers</a>
+</li></ul>
+<li><a name="toc_TOC79" href="#TOC79">12 License</a>
+<li><a name="toc_TOC80" href="#TOC80">Abbreviations</a>
+</li></ul>
+</div>
+
+
+
+<h2 class="chapter"><a name="TOC0"></a>1 Introduction</h2>
+
+<p>LTEENB is a LTE base station (eNodeB) implemented entirely in software
+and running on a PC. The PC generates a baseband signal which is sent
+to a radio front end doing the digital to analog conversion. The
+reverse is done for the reception.
+
+   <p>LTEENB interfaces with a LTE Core Network thru the standard S1
+interface. In particular the Amarisoft Core Network software (LTEMME)
+can easily be connected to it to build a highly configurable LTE test
+network.
+
+<h2 class="chapter"><a name="TOC1"></a>2 Features</h2>
+
+<h3 class="section"><a name="TOC2"></a>2.1 PHY layer</h3>
+
+     <ul>
+<li>LTE release 12 compliant. 
+<li>FDD and TDD configurations
+<li>Tested bandwidths: 1.4, 3, 5, 10, 15 and 20 MHz. 
+<li>Handle several cells in intra-band or inter-band configurations. 
+<li>Transmission modes: 1 (single antenna) and 2 to 10 (MIMO 2x2). 
+<li>Wideband CQI/PMI reports
+<li>HARQ support. 
+<li>Timing measurement thru the PRACH. 
+<li>Closed-loop UE power control. 
+<li>Frequency based MMSE equalizer. 
+<li>Highly optimized software turbo decoder. 
+<li>PAPR reduction support. 
+<li>Support of other radio heads can be added with an external shared library. 
+<li>Positioning Reference Signals (PRS) support. 
+<li>CSI-RS support. 
+<li>Multi-cluster PUSCH allocation. 
+<li>PUCCH 3 and PUCCH channel selection support. 
+<li>Carrier Aggregation support with cross carrier scheduling (tested with 2 DL channels)
+<li>FDD-TDD Carrier Aggregation support. 
+<li>CoMP testing features (DMRS scrambling identity and QCL parameters can be selected). 
+<li>256QAM DL support for PDSCH and MBMS. 
+<li>Support of release 11 TDD special subframe configurations 7 and 9. 
+</ul>
+
+<h3 class="section"><a name="TOC3"></a>2.2 Protocol Layer</h3>
+
+     <ul>
+<li>LTE release 12 compliant. 
+<li>Implements the MAC, RLC, PDCP and RRC layers. 
+<li>Round-robin MAC scheduler with dynamic MCS selection. 
+<li>Support of full and half duplex UEs. 
+<li>DRX support. 
+<li>Number of active users only limited by the available bandwidth. 
+<li>Fully configurable System Information Blocks. 
+<li>Integrity check and encryption using the AES and Snow3G algorithms. 
+<li>Support of RRC measurement with measurement gap. 
+<li>Supports intra eNodeB, S1 or X2 handovers. 
+<li>QoS support with user selectable DRB configuration for each QCI. 
+<li>ROHC support (RTP, UDP and IP v1 profiles). 
+<li>Public Warning System (CMAS/ETWS) support. 
+<li>MBMS support. 
+<li>Category 0 UE support. 
+</ul>
+
+<h3 class="section"><a name="TOC4"></a>2.3 Network interface</h3>
+
+     <ul>
+<li>Standard S1AP and GTP-U interfaces to the Core Network. Several PLMNs and
+S1 interfaces can be used simultaneously. 
+<li>X2AP interface between eNodeBs. 
+<li>M1 interface for MBMS. 
+<li>IPv6 support. 
+</ul>
+
+<h3 class="section"><a name="TOC5"></a>2.4 User interface</h3>
+
+     <ul>
+<li>Configurable logging system for all channels with built-in text decoders. 
+<li>Wireshark MAC-LTE capture. 
+<li>Command line monitor. 
+<li>Test commands to initiate handover and to dynamically change the power level of each cell. 
+</ul>
+
+<h2 class="chapter"><a name="TOC6"></a>3 Requirements</h2>
+
+<h3 class="section"><a name="TOC7"></a>3.1 Hardware requirements</h3>
+
+     <ul>
+<li>A fast PC:
+
+          <ul>
+  <li>For best performances, a quad core Intel Core i7 CPU (Nehalem
+  or later) is recommended. Support of the SSE4.1 instruction set
+  extension is required to run the software.
+
+          <li>At least 2 Gigabit Ethernet ports.
+
+          <li>At least 2 GB of RAM.
+
+          <li>At least 1 GB of hard disk space.
+
+          <li>The video adapter does not matter.
+
+     </ul>
+
+     <li>Radio front end
+
+          <ul>
+    <li>Ettus Research USRP N2x0 (SBX daughterboard). For MIMO 2x2, a second N2x0
+    with the SBX daughterboard and a USRP MIMO cable are needed.
+
+          <li>Ettus Research USRP B2x0.
+
+          <li>Ettus Research USRP X3x0.
+
+          <li>Nutaq PicoSDR 2x2. 
+  </ul>
+
+     <li>Appropriate antennas for the intended LTE frequencies
+or cables and attenuators to connect to a UE.
+
+     <li>LTE UE compatible with LTE release 8 FDD. All LTE FDD frequency bands
+are supported. If you use the Amarisoft Core Network, the device must
+accept test USIM cards (sim locked devices may not accept them).
+
+     <p>The following UEs were tested:
+          <ul>
+<li>Vodafone K5505 (aka Huawei E398) USB dongle (software release: 11.335.21.20.11)
+<li>LG Optimus True HD P936 (software release: V10e-JUN-05-2012)
+<li>LG Nexus 5 (M8974A-1.0.25.0.23)
+<li>Samsung S4
+<li>Samsung S5
+</ul>
+
+     <li>A test USIM card. Test USIM cards from Anritsu are supported by the default configuration. Other test USIM cards should work as well provided their IMSI and secret key are known.
+
+</ul>
+
+<h3 class="section"><a name="TOC8"></a>3.2 Software requirements</h3>
+
+     <ul>
+<li>A 64 bit Linux distribution. Fedora 20  is the officially supported distribution.<br>
+The following distributions are known as compatible:
+          <ul>
+<li>Fedora 17
+<li>Fedora 20
+<li>Ubuntu 12
+<li>Ubuntu 14
+</ul>
+
+     <p>Other distributions can be used provided the radio frontend drivers are available for them.<br>
+Other distributions can be used provided the radio frontend drivers are available for them.<br>
+
+     <li>The Amarisoft LTE Core Network (another Core Network can be used, but we only explain here how to quickly set up the Amarisoft Core Network).
+
+</ul>
+
+<h2 class="chapter"><a name="TOC9"></a>4 Off-The-Shelf package</h2>
+
+<p>If you ordered the OTS package, you don't need installation so you can skip next chapter.<br>
+When booting, MME end eNB are automatically started within a screen.<br>
+If you are not familiar with screen here is what you must know:
+
+     <ul>
+<li>To have access to consoles, log on the machine with root access, then type:
+     <pre class="example">          screen -r
+</pre>
+     <li>To access MME monitor:
+     <pre class="example">          CTRL-A + 0
+</pre>
+     <li>To access eNB monitor:
+     <pre class="example">          CTRL-A + 1
+</pre>
+     <li>To exit screen
+     <pre class="example">          CTRL-A + d
+</pre>
+     </ul>
+
+<h2 class="chapter"><a name="TOC10"></a>5 Installation</h2>
+
+<p>The radio front end must be connected to one gigabit Ethernet port (don't use a
+switch to connect them to avoid potential packet losses). The other
+Ethernet port can be connected to the local network if necessary.
+
+   <p>It is not recommended to run LTEENB in a virtual machine because it
+has hard real time constraints.
+
+   <p>We also assume that you have some Linux and LTE knownledge.
+
+<h3 class="section"><a name="TOC11"></a>5.1 Linux setup</h3>
+
+<p>LTEENB and LTEMME use the SCTP protocol for which the necessary
+packages are not usually installed. In order to install them, do as
+root user:
+
+     <ul>
+<li>Fedora 17, 19, 20
+     <pre class="example">          yum install lksctp-tools kernel-modules-extra
+</pre>
+     <li>Ubuntu 14.04:
+     <pre class="example">          sudo apt-get install lksctp-tools linux-image-extra-3.13.0-24-generic
+</pre>
+     <p>As there are naming differences in openssl libraries between Fedora and Ubuntu, you may create a symbolic link to make it work on Ubuntu:
+     <pre class="example">          ln -s /lib/x86_64-linux-gnu/libcrypto.so.1.0.0 \
+              /lib/x86_64-linux-gnu/libcrypto.so.10
+          
+          ln -s /lib/x86_64-linux-gnu/libssl.so.1.0.0 \
+              /lib/x86_64-linux-gnu/libssl.so.10
+</pre>
+     </ul>
+
+   <p>and reboot the PC in case the Linux kernel was upgraded too.
+
+   <p><a name="RRH-setup"></a>
+
+<h3 class="section"><a name="TOC12"></a>5.2 RRH setup</h3>
+
+<p>Please refer to sub section of your radio frontend to set it up.<br>
+When configured, you will have to select it (See <a href="#RRH-selection">RRH selection</a>).
+
+   <p><a name="USRP-N200_002fN210-setup"></a>
+
+<h4 class="subsection"><a name="TOC13"></a>5.2.1 USRP N200/N210 setup</h4>
+
+<p>Specific information is available at
+<a href="http://files.ettus.com/uhd_docs/manual/html/index.html">http://files.ettus.com/uhd_docs/manual/html/index.html</a>. We
+give here a short summary.
+
+   <p>The radio front end must be connected to one gigabit Ethernet port (don't use a
+switch to connect them to avoid potential packet losses).
+
+   <p>If you have 2 radio frontends for MIMO setup you may connect second device to
+first one using MIMO cable or connect it to another gigabit Ethernet port
+(MIMO cable remains necessary).
+
+     <ul>
+<li>Driver installation.
+
+          <ul>
+    <li>Fedora 17<br>
+    Download the x86_64 RPM from <a href="http://files.ettus.com/binaries/uhd_stable/uhd_003.005.004-release/">http://files.ettus.com/binaries/uhd_stable/uhd_003.005.004-release/</a> and install it.
+
+          <li>Other Fedora and Ubuntu<br>
+    Follow instruction at <a href="http://ettus-apps.sourcerepo.com/redmine/ettus/projects/uhd/wiki/UHD_Linux">http://ettus-apps.sourcerepo.com/redmine/ettus/projects/uhd/wiki/UHD_Linux</a> to install repos and package.
+
+     </ul>
+
+     <p><a name="UHD-driver-compatibility"></a>LTEENB is compiled with following UHD versions:
+          <ul>
+    <li>3.5.4
+    <li>3.7.0
+    <li>3.7.1
+    <li>3.8.0
+    <li>3.8.1
+    <li>3.8.2
+  </ul>
+       Using other versions may yield binary incompatibility if ABI version differs.
+
+     <li>Configure the Ethernet interface for the USRP. The parameters are:
+
+          <ul>
+    <li>IPv4 address: <code>192.168.10.1</code>
+    <li>Subnet mask: <code>255.255.255.0</code>
+    <li>MTU size: <code>4000</code>
+  </ul>
+
+     <p>Verify that you can ping the USRP device. Its default IP address is
+<code>192.168.10.2</code>:
+
+     <pre class="example">          ping 192.168.10.2
+</pre>
+     <p>The large MTU size is needed to use <em>Jumbo frames</em> which optimizes
+the Ethernet bandwidth.
+
+     <p>For following steps, you should change network stack buffer sizes (Run as <code>root</code>):
+     <pre class="example">          sysctl -w net.core.rmem_max=50000000
+          sysctl -w net.core.wmem_max=1048576
+</pre>
+     <li>Check that the USRP is visible:
+
+     <pre class="example">          uhd_usrp_probe --args addr=192.168.10.2
+</pre>
+     <p>It should print the various capabilities of the USRP device. You can
+send and receive some baseband samples to test the speed of the
+Ethernet connection:
+
+     <pre class="verbatim">     /usr/share/uhd/examples/benchmark_rate --args \
+                  addr=192.168.10.2,send_frame_size=3972,recv_frame_size=3972 \
+                  --tx_rate 12500000 --rx_rate 12500000 --duration 30
+</pre>
+
+     <p>NB: you may find <code>benchmark_rate</code> there:
+          <ul>
+  <li>Fedora 19/20: /usr/lib64/uhd/examples/benchmark_rate
+  <li>Ubuntu 14.04: /usr/lib/uhd/examples/benchmark_rate
+</ul>
+
+     <p>The test runs during 30 seconds. There should be no error, overflow nor
+underflow.
+
+     <li>If you did not already do it before, calibrate your device. Run as <code>root</code> in this order:
+
+     <pre class="example">          uhd_cal_rx_iq_balance --verbose --args addr=192.168.10.2
+          
+          uhd_cal_tx_iq_balance --verbose --args addr=192.168.10.2
+          
+          uhd_cal_tx_dc_offset --verbose --args addr=192.168.10.2
+</pre>
+     <p>It takes a few minutes for each command.
+
+     <li>Additional network configuration to increase the size of the network
+buffers is included in the script <samp><span class="file">lte_init.sh</span></samp> given with
+LTEENB.
+
+     <li>MIMO. In order to simplify the setup, you can use the MIMO cable which
+synchronizes the USRP clocks and allows one USRP
+to act as an Ethernet switch for the other. 
+Else you need to connect each USRP on a different network interface.
+
+   </ul>
+
+   <p><a name="USRP-B200_002fB210-setup"></a>
+
+<h4 class="subsection"><a name="TOC14"></a>5.2.2 USRP B200/B210 setup</h4>
+
+<p>The USRP B200/B210 are supported, but on some PCs the USB3 interface
+does not work reliably. Moreover, there are still evolutions in the
+corresponding UHD driver.
+
+   <p>We recommend the following steps to try it:
+
+     <ol type=1 start=1>
+<li>Install UHD driver as for N2x0 (See <a href="#USRP-N200_002fN210-setup">USRP N200/N210 setup</a>), the B2x0 does not work with release &lt; 3.7.0).
+
+     <li>Check that the B2x0 is available and upload the firmware:
+
+     <pre class="example">          uhd_usrp_probe
+</pre>
+     <li>Check that USB3 interface is working:
+
+     <pre class="verbatim">     /usr/share/uhd/examples/benchmark_rate --args master_clock_rate=11.52e6 \
+                  --tx_rate 11520000 --rx_rate 11520000 --duration 30
+</pre>
+
+     <p>The test runs during 30 seconds. There should be no error, overflow
+nor underflow.
+
+        </ol>
+
+   <p>NB: You should take a look at configuration file in <code>config/b2x0</code> as it may require
+some changes depending on disered bandwidth.
+
+   <p><a name="X300_002fX310-setup"></a>
+
+<h4 class="subsection"><a name="TOC15"></a>5.2.3 X300/X310 setup</h4>
+
+<p>The USRP X300/X310 are supported. The setup is very similar to the
+N200/N210. The UHD driver version &gt;= 3.7.0 must be installed. The X3x0
+has a specific support for LTE sample rates.
+
+   <p>NB: You should take a look at configuration file in <code>config/x3x0</code> as it may require
+some changes depending on disered bandwidth.
+
+<h4 class="subsection"><a name="TOC16"></a>5.2.4 PCIe SDR</h4>
+
+<h5 class="subsubsection"><a name="TOC17"></a>5.2.4.1 Compilation and installation</h5>
+
+<p>First, you need to compile the kernel module.<br>
+Your system will require <code>kernel-devel</code> and <code>gcc</code> packages to be installed.<br>
+Extract delivered SDR tarball and:
+
+<pre class="example">     cd kernel
+     make
+</pre>
+   <p>Then you need to copy Amarisoft driver to your eNB directory:
+
+<pre class="example">     cd ..
+     cp trx_sdr.so &lt;eNB path&gt;
+</pre>
+   <p>And last, copy config files:
+
+<pre class="example">     cp -r config &lt;eNB path&gt;/config/sdr
+</pre>
+   <h5 class="subsubsection"><a name="TOC18"></a>5.2.4.2 Driver initialization</h5>
+
+<p>After each boot of your system you will need to initialize kernel module.<br>
+Go to extracted SDR tarbal and:
+
+<pre class="example">     cd kernel
+     ./init.sh
+</pre>
+   <p>NB: this command requires root permission.
+
+<h5 class="subsubsection"><a name="TOC19"></a>5.2.4.3 Connectors</h5>
+
+<div class="block-image"><img src="img/sdr.jpg" alt="img/sdr.jpg"></div>
+
+<h4 class="subsection"><a name="TOC20"></a>5.2.5 Nutaq PicoSDR 2x2</h4>
+
+<p>Nutaq PicoSDR is already preinstalled.
+
+   <p><a name="Linux-setup-for-best-performance"></a>
+
+<h3 class="section"><a name="TOC21"></a>5.3 Linux setup for best performance</h3>
+
+<p>LTEENB requires a lot of CPU power and it has hard real time
+requirements (a maximum latency of 3 ms is required).
+
+   <p>In order to get the lowest latency, it is recommended to set up the
+<code>performance</code> frequency governor for each CPU core. An example is
+included in the <samp><span class="file">lte_init.sh</span></samp> script given with LTEENB.
+
+   <p>Some buggy drivers are known to block the CPU during a few tens of
+ms. When it happens, LTEENB displays <code>UHD status: L=X U=Y
+S=Z</code>. One known problem is the DRM KMS cable polling. The script
+<samp><span class="file">lte_init.sh</span></samp> disables it automatically.
+
+   <p>Other drivers such as Wifi controllers can give the same problem. In
+order to avoid such problems, remove all unnecessary peripherals from
+the PC.
+
+<h3 class="section"><a name="TOC22"></a>5.4 UE setup</h3>
+
+<p>Insert the test USIM card in the device.<br>
+Enable data connection and roaming in the configuration of your device.
+
+   <p>With LTE, no Access Point Name (APN) is necessary because a default one
+is always provided by the network.<br>
+However, some UEs insists on having the same APN name as the MME to enable
+IP connectivity.
+
+   <p>As a result, start by removing any APN stored in the UE and manualy add APN
+(Only APN name is required) as defined in MME configuration file
+(Default is test123).
+
+   <p>If possible, disable 2G (GSM) and 3G (WCDMA) access to have only LTE
+access system in order to speed up the network search.
+
+   <p>If possible, limit the LTE frequency bands used by the device to the
+one you want to use in order to speed up the network search.
+
+<h3 class="section"><a name="TOC23"></a>5.5 LTEMME installation</h3>
+
+<p>Decompress the LTEMME archive to a convenient place. The executable
+<code>ltemme</code> can be launched from this directory.
+
+<h4 class="subsection"><a name="TOC24"></a>5.5.1 Basic LTEMME configuration</h4>
+
+<p>The main configuration file is <samp><span class="file">config/mme.cfg</span></samp>. It uses a
+superset of the JSON syntax.
+
+   <p>If your USIM card has different parameters from Anritsu, you need to
+put its IMSI and secret key in the <code>ue_db</code> section.
+
+   <p>You also need to change the DNS address that will be given to the UE
+to match the DNS address of your local network (parameter
+<code>dns_addr</code>).
+
+<h4 class="subsection"><a name="TOC25"></a>5.5.2 License key installation</h4>
+
+<p>LTEMME needs a license key file to run. <em>It is associated to your
+PC, so if you replace it or change its hardware configuration you must
+contact Amarisoft to get a new license key</em>.
+
+   <p>The following steps are needed to get this license file:
+
+     <ul>
+<li>Run LTEMME:
+
+     <pre class="example">          ./ltemme config/mme.cfg
+</pre>
+     <p>It says that the license key is not present and prints a 16 digit
+hexadecimal code.
+
+     <li>Send by mail to <code>support@amarisoft.com</code> this hexadecimal code to your contact at Amarisoft. You will get back the <samp><span class="file">ltemme.key</span></samp> license key file.
+
+     <li>Copy the <samp><span class="file">ltemme.key</span></samp> file to the <samp><span class="file">${HOME}/.amarisoft/</span></samp> directory (<code>${HOME}</code> is the home directory of the <code>root</code> user). You can use the shell variable <code>AMARISOFT_PATH</code> to change this path.
+
+   </ul>
+
+   <p>Once the license key is installed, <code>ltemme</code> should start
+normally.
+
+<h3 class="section"><a name="TOC26"></a>5.6 LTEENB installation</h3>
+
+<p>Decompress the LTEENB archive to a convenient place. The executable
+<code>lteenb</code> can be launched from this directory.
+
+<h4 class="subsection"><a name="TOC27"></a>5.6.1 Basic LTEENB configuration</h4>
+
+<p>The main configuration file is <samp><span class="file">config/enb.cfg</span></samp>. It uses a
+superset of the JSON syntax.
+
+   <p>The default setup is for a 10 MHz LTE eNodeB. The main parameter you
+need to change right now is the actual frequency you want to use. You
+need to be sure that no interference is present on the frequency you
+are using and that you have the legal right to use it (in most
+countries it is illegal to transmit on LTE frequency bands without an
+explicit authorization).
+
+   <p>In order to reduce interferences, it is recommended to use a high
+frequency band such as the 2600 MHz band (band 7) in Europe.
+
+   <p>The parameter <code>dl_earfcn</code> gives the EARFCN of the center
+frequency for the downlink. The corresponding uplink frequency is
+automatically choosen. The center frequency can be arbitrarily choosen
+provided the transmitted spectrum fully lies inside the choosen
+band. So if <code>f</code> is the center frequency, <code>B</code> the LTE
+bandwidth, <code>f_min</code> and <code>f_max</code> the band limits, the
+following relation must hold:
+
+<pre class="example">     f_min + 0.5 * B &lt;= f &lt;= f_max - 0.5 * B
+</pre>
+   <p>The EARFCN is the frequency expressed in 100 kHz units starting from
+an offset depending on the selected band. You can have the band
+parameters and do convertions between EARFCNs and frequencies at
+<a href="http://niviuk.free.fr/lte_band.php">http://niviuk.free.fr/lte_band.php</a> or by looking at the section
+5.7.3 of 3GPP TS 36.101.
+
+   <p><a name="RRH-selection"></a>
+
+<h4 class="subsection"><a name="TOC28"></a>5.6.2 RRH selection</h4>
+
+<p>To select appropriate RF frontend to use, please execute following command:
+
+<pre class="example">     ./config/rf_select.sh &lt;type&gt;
+</pre>
+   <p>Where <code>type</code> is your frontend type:
+     <ul>
+<li>n2x0
+<li>b2x0
+<li>x3x0
+<li>sdr
+<li>nutaq
+</ul>
+
+   <p>NB: you can lanch following command to see available frontends:
+<pre class="example">     ./config/rf_select.sh
+</pre>
+   <h4 class="subsection"><a name="TOC29"></a>5.6.3 License key installation</h4>
+
+<p>LTEENB needs a license key file to run. <em>It is associated to your
+PC, so if you replace it or change its hardware configuration you must
+contact Amarisoft to get a new license key</em>.
+
+   <p>The following steps are needed to get this license file:
+
+     <ul>
+<li>Run LTEENB:
+
+     <pre class="example">          ./lteenb config/enb.cfg
+</pre>
+     <p>It says that the license key is not present and prints a 16 digit
+hexadecimal code.
+
+     <li>Send by mail this hexadecimal code to your contact at Amarisoft. You will get back the <samp><span class="file">lteenb.key</span></samp> license key file.
+
+     <li>Copy the <samp><span class="file">lteenb.key</span></samp> file to the <samp><span class="file">${HOME}/.amarisoft/</span></samp> directory (<code>${HOME}</code> is the home directory of the <code>root</code> user). You can use the shell variable <code>AMARISOFT_PATH</code> to change this path.
+
+   </ul>
+
+   <p>Once the license key is installed, <code>lteenb</code> should start
+normally.
+
+<h3 class="section"><a name="TOC30"></a>5.7 Initial testing</h3>
+
+<p>Customize and start the <code>lte_init.sh</code> script as <code>root</code> user to
+configure the network and CPU governors.
+
+   <p>Start the LTEMME software as <code>root</code> user. <code>root</code> priviledges
+are needed to set up the virtual network interface.
+
+<pre class="example">     ./ltemme config/mme.cfg
+</pre>
+   <p>In another terminal, start the LTEENB software as <code>root</code> user. 
+<code>root</code> priviledges are needed to use real time scheduling
+priority.
+
+<pre class="example">     ./lteenb config/enb.cfg
+</pre>
+   <p>The base station is now running. Type <code>s1</code> in the command line
+monitor of LTEENB to verify that it is connected to LTEMME. If it is
+the case, type <code>t</code> to enable the MAC traces (the traces are
+automatically disabled once you press return).
+
+   <p>Turn on the UE and keep it at a few meters of the eNodeB antenna. It
+starts scanning the LTE bandwidth. After a few minutes, it should
+detect the eNodeB signal and transmit its first PRACH signal to the
+base station. You should get a trace like:
+
+<pre class="example">     PRACH: cell=01 seq=X ta=Y snr=Z dB
+</pre>
+   <p>Then the UE will <em>attach</em> to the simulated LTE core network and
+get its IP address. If it works, then the device will indicate it is
+connected.
+
+   <p>The core network maintains a persistent database storing all the
+parameters of the configured UEs. It is by default in
+<samp><span class="file">config/lte_ue.db</span></samp>. If the initial connection is OK, you can get
+the IP address of the UE from this file. You can then try to ping it
+from the PC.
+
+   <p>Then if the local network is correctly configured on the PC, the UE
+can access to your local network (and internet if your local network
+allows it).
+
+<h2 class="chapter"><a name="TOC31"></a>6 Troubleshooting</h2>
+
+<p>There are many parameters in an LTE setup, so there are many cause of
+problems. Here are a few ones we noticed during our tests:
+
+<h3 class="section"><a name="TOC32"></a>6.1 LTEENB does not start</h3>
+
+<p>LTEENB must be launched as root so that it can use real time
+scheduling.
+
+   <p>If some librairies needed by LTEENB are not present, it means you need
+to use another Linux distribution or to upgrade it.
+
+<h3 class="section"><a name="TOC33"></a>6.2 UHD library ABI compatibility mismatch</h3>
+
+<p>If you get this kind of message while starting <em>lteenb</em>:
+
+<pre class="example">     'trx_uhd_3.4.0.so' does not exist
+</pre>
+   <p>It means that current UHD version on your system is not supported.<br>
+You should update it are install a supported one manually (see <a href="#UHD-driver-compatibility">UHD driver compatibility</a>).
+
+   <p>If you have downloaded, compiled and installed manually the UHD driver (see <a href="#USRP-N200_002fN210-setup">USRP N200/N210 setup</a>), you can force use of the generated library this way:
+<pre class="example">     sudo LD_LIBRARY_PATH=&lt;INSTALL_PATH&gt;/uhd-source_003.007.000-1-stable/lib ./lteenb &lt;CONFIG_FILE&gt;
+</pre>
+   <h3 class="section"><a name="TOC34"></a>6.3 The license key file is not correct</h3>
+
+<p>You need to contact Amarisoft to get a valid license key and/or a USB
+dongle.
+
+<h3 class="section"><a name="TOC35"></a>6.4 Many messages 'UHD status: L=X U=Y S=Z' are displayed.</h3>
+
+<p>These messages indicate that there are underflows or overflows errors
+when communicating with the USRP device. The most likely explanation
+is that not enough CPU time is available. You can launch
+<pre class="example">     top -H
+</pre>
+   <p>To see which processes and threads use the CPU time. Normally only 2
+LTEENB threads should use about 50% of one CPU core time each when the
+eNodeB is idle. The following can be done to help:
+
+     <ul>
+<li>Remove unnecessary drivers and peripherals. See <a href="#Linux-setup-for-best-performance">Linux setup for best performance</a>. 
+<li>Launch <code>lteenb</code> as <code>root</code> so that it can use real time scheduling. 
+<li>Don't connect the USRP to the PC thru a switch to avoid packet losses. 
+<li>Ensure that your CPU is fast enough. It should be at least a 4 core
+Core i7 Nehalem or later. 
+<li>If your CPU is too slow, consider using a smaller LTE bandwidth (the CPU load is proportional to the bandwidth). 
+<li>If the errors happen during high traffic, be sure you have disabled the <code>debug</code> log output (<code>log_options</code> option). It generates a lot of data and takes some CPU time. 
+<li>If the errors happen during high traffic, consider limiting the eNodeB uplink bit rate. See <a href="#CPU-load-limitation">CPU load limitation</a>. 
+</ul>
+
+   <p>For best performance, you can also remove unused daemons or cron jobs,
+in particular:
+
+     <ul>
+<li>The automatic upgrade done by PackageKit or similar.
+
+     <li>The various scripts in <samp><span class="file">/etc/cron.{hourly|daily|weekly}</span></samp> which take some time and which are not strictly needed: <code>mlocate</code>, <code>tmpwatch</code>, <code>man-db</code>, <code>prelink</code>.
+
+   </ul>
+
+   <p>If the PC is only used as server, it is better to boot the PC in text
+mode by default. If <samp><span class="file">systemd</span></samp> is used by your Linux distribution
+(Fedora), it is done by changing the link
+<samp><span class="file">/etc/systemd/system/default.target</span></samp> to
+<samp><span class="file">/lib/systemd/system/runlevel3.target</span></samp>. If <samp><span class="file">init</span></samp> is used,
+it is done by modifying <samp><span class="file">/etc/inittab</span></samp> to use the run level 3 as
+the default run level:
+
+<pre class="example">     id:3:initdefault:
+</pre>
+   <h3 class="section"><a name="TOC36"></a>6.5 The initial PRACH signal is not received.</h3>
+
+<p>This is the most critical step. If you don't get the initial PRACH
+signal, it indicates that something is wrong in your
+configuration. Here are a few important points:
+
+     <ul>
+<li>Check that your EARFCN is correct and in a band without interference. Warning: the EARFCN corresponds to the frequency of the <em>center</em> of the bandwidth. Use a cable and an attenuator if you want to avoid interfering with another network or if you don't have the authorization to transmit on the corresponding frequency.
+
+     <li>Check that your UE is correctly configured: LTE must be enabled on the right frequency band.
+
+     <li>The UE may not get a good enough signal or may saturate. Try to move it closer or further from the base station antenna. Some UE have better performance with some frequency bands, so try another frequency band supported by the UE.
+
+     <li>Only if you have problems after changing the frequency band, make sure that you use a different <code>cell_id</code> in <samp><span class="file">enb.cfg</span></samp>. The UE memorizes the last parameters and won't search another frequency if the Cell Identity is not modified.
+
+   </ul>
+
+   <p>If none of the previous point helps, consider trying another frequency
+band (change the EARFCN and update <code>cell_id</code> in <samp><span class="file">enb.cfg</span></samp>).
+
+<h3 class="section"><a name="TOC37"></a>6.6 The initial PRACH is received, but the UE is never attached.</h3>
+
+<p>Look at the <samp><span class="file">/tmp/enb0.log</span></samp> log file. There can be several
+problems. The normal steps are RRC connection, then NAS messages are
+exchanged to attach the UE and authenticate it.
+
+   <p>The possible problems are:
+
+     <ul>
+<li>Radio problems. In this case, no NAS messages are seen in the logs. Try to lower the TX gain of the radio frontend (<code>tx_gain</code> parameter) to reduce the TX/RX interferences due to the lack of proper duplexer.
+
+     <li>Invalid IMSI configured. In this case, the dialog stops after the NAS attach request message.
+
+     <li>SIM authentication error. In this case, the dialog ends in the Authentication request/Authentication response NAS dialog. It means you don't have the correct secret key configured.
+
+     <li>Security configuration error. In the case, the dialog stops after the NAS security mode command. It indicates that the UE does not accept to be configured without integrity check and encryption. You need to find another UE which is more tolerant (we never hit this case, but it might happen).
+
+     <li>Immediate NAS detach after NAS attach complete. In this case, the UE
+does not accept something in the network configuration. It can happen
+if it requested IPv6 (we only support IPv4 in the default
+configuration) or if the APN is not correct. It can also happen
+because of an invalid UE database in the core network emulation. Try
+to turn off and on the device several times to see if the problem
+persists (there are various timeouts and number of NAS attempts which
+can be triggered and solve the issue).
+
+     <li>Unexpected <code>PDN connectivity request</code>. In this case, you see
+<code>PDN connectivity request</code> and <code>PDN connectivity reject</code> in
+the logs. Remove any explicit Access Point Name (APN) in the UE
+configuration (the core network emulation only supports configuring a
+default PDN in the initial attach).
+
+   </ul>
+
+<h3 class="section"><a name="TOC38"></a>6.7 The initial attach is OK but <code>ping</code> is not working.</h3>
+
+<p>If you get here, the device indicates that the LTE/4G connection is up
+but the ping to the UE from the PC does not work. You can also try a
+ping from the device to the PC (the PC can be pinged on 192.168.3.1).
+
+   <p>Radio problems can still be the explication if the radio conditions
+are too bad. The symptom of this case is that you see many PRACH
+signals coming from the UE. Try to reduce the TX power with the
+<code>tx_gain</code> parameter.
+
+   <p>Another explanation can be that the UE does not accept roaming. Try to
+enable it on the UE.
+
+   <p>Another explanation can be bugs in the UE (or its PC driver if it is a
+USB dongle) in case you changed the LTE configuration (we noticed it
+in some cases). The symptom is that the IP packets are truncated when
+doing <code>tcpdump</code> on the UE side. In case of doubt, just turn off
+and on the UE (and the corresponding PC if it is a USB dongle) to
+start from a clean state.
+
+<h3 class="section"><a name="TOC39"></a>6.8 The ping is working but no Internet access is possible from the UE.</h3>
+
+<p>The most likely explanation is that the IP forwarding/masquerading is
+not configured correctly on the PC. You need to look at the IP table
+configuration (/sbin/iptables -n -v -L) and correct it if the
+<samp><span class="file">lte_init.sh</span></samp> configuration is not enough. Use of
+<code>tcpdump</code> or <code>wireshark</code> on the different interfaces can
+help to locate the problem.
+
+   <p>Another possibility is that the DNS address given to the UE is not
+correct (try to ping using IP address instead of host names).
+
+   <p>Verify that roaming is activated on the UE. The UE may not accept
+roaming and avoid IP access even if the ping is working.
+
+<h2 class="chapter"><a name="TOC40"></a>7 Advanced Configuration</h2>
+
+<h3 class="section"><a name="TOC41"></a>7.1 Logging</h3>
+
+<p>The eNodeB and the Core Network can output the messages of
+all the layers to log files. See the <code>log_options</code> option to
+select the layer to output and the level of verbosity. The log
+filenames are defined with the <code>log_filename</code> option.
+
+   <p>You can also use Wireshark to monitor the S1 (S1AP with embedded NAS,
+GTP-U) link between the eNodeB and the Core Network.
+
+<h3 class="section"><a name="TOC42"></a>7.2 Changing the LTE bandwidth</h3>
+
+<p>It is configured with the <code>n_rb_dl</code> parameter giving the number
+of resource blocks. Use <code>n_rb_dl</code> = 6, 15, 25, 50, 75, 100 for the bandwiths 1.4, 3, 5, 10, 15, 20 MHz.
+
+   <p>The SIB2 configuration should also be modified in
+<code>sib_sched_list</code>. Preconfigured files are available for the
+available bandwidths: <samp><span class="file">sib23_rb6.asn</span></samp>, <samp><span class="file">sib23_rb15.asn</span></samp>,
+<samp><span class="file">sib23_rb25.asn</span></samp>, <samp><span class="file">sib23_rb50.asn</span></samp>, <samp><span class="file">sib23_rb75.asn</span></samp>
+and <samp><span class="file">sib23_rb100.asn</span></samp>.
+
+   <p>Notes:
+     <ul>
+<li>The 1.4 MHz bandwidth needs a specific scheduler configuration, so
+use the configuration file <samp><span class="file">enb-1_4mhz.cfg</span></samp> instead.
+
+     <li>The CPU load is proportional to the LTE bandwidth.
+
+     <li>Not all LTE bands allow all LTE bandwidths. For example, bands 7
+(2.6 GHz) and band 20 (Europe 800 EDD) do not support the bandwidths
+of 1.4 and 3 MHz.
+
+   </ul>
+
+   <p><a name="CPU-load-limitation"></a>
+
+<h3 class="section"><a name="TOC43"></a>7.3 CPU load limitation</h3>
+
+<p>In order to avoid using too much CPU time, it is possible to limit the
+uplink MCS (<code>pusch_max_mcs</code>) and the number of iterations of the
+turbo decoder (<code>pusch_max_its</code>). Normally it is only critical for
+the larger LTE bandwidths (20 MHz). The symptom of too high CPU use
+are many messages <code>UHD status: L=X U=Y S=Z</code>.
+
+<h3 class="section"><a name="TOC44"></a>7.4 UE connection traces</h3>
+
+<p>By default or when using the <code>t</code> monitor command, the eNodeB
+displays the status of the connection with the UEs. It stops
+displaying them when you press return.
+
+<pre class="smallexample">                   --DL--------------------- --UL---------------------------------------
+     UE_ID CL RNTI cqi ri  mcs retx txok brate  snr puc1  mcs retx rxok brate    turbo phr
+         1 01 003d  12  1 21.1    0  361 1.77M  9.1  8.5 14.7    3  779 2.06M 1/3.5/10   -
+</pre>
+     <dl>
+<dt><code>UE_ID</code><dd>S1 eNodeB UE identity, unique among all cells.
+
+     <br><dt><code>CL</code><dd>Lower 8 bits of the cell identity (hexadecimal).
+
+     <br><dt><code>RNTI</code><dd>C-RNTI of the UE.
+
+     <br><dt><code>cqi</code><dd>Channel Quality Indicator, between 0 (bad) and 15 (very good).
+
+     <br><dt><code>ri</code><dd>Rank Indicator (number of layers for MIMO).
+
+     <br><dt><code>mcs</code><dd>Average Modulation and Coding Scheme.
+
+     <br><dt><code>retx</code><dd>Number of transport Blocks retransmissions.
+
+     <br><dt><code>txok</code><dd>Number of successfully transmitted transport blocks.
+
+     <br><dt><code>brate</code><dd>Average bitrate, in bits per second.
+
+     <br><dt><code>snr</code><dd>is the measured Signal to Noise Ratio for the uplink from the PUSCH
+reference signals and the SRS. 
+<br><dt><code>puc1</code><dd>is the measured Signal to Noise Ratio for the last PUCCH1. 
+<br><dt><code>turbo</code><dd>gives the minimum, average and maximum number of iterations of the
+turbo decoder. 
+<br><dt><code>phr</code><dd>is the content of the last Power Headroom MAC control element sent by
+the UE. It is expressed in dB. Negative values indicate that the UE
+could not transmit with the required power.
+
+   </dl>
+
+<h3 class="section"><a name="TOC45"></a>7.5 UE Power control</h3>
+
+<p>The eNodeB does dynamic UE power control (see the <code>dpc</code>)
+option. However, it is better to have a good initial UE power to avoid
+retransmissions or interferences. So it is important to correctly set
+the various power settings in the SIBs. In particular, to avoid
+generating too much interference and to limit the battery drain, the
+SIB1 <code>p-Max</code> parameter (maximum allowed power for the UE in dBm)
+should be set to a low enough value (a few dBm).
+
+   <p>It is also useful to tune the value of <code>referenceSignalPower</code>
+(power per carrier of the reference signal in dBm) in SIB2. It is used
+by the UE to compute the path loss and to adjust its own transmit
+power.
+
+<h3 class="section"><a name="TOC46"></a>7.6 Multi-cell support</h3>
+
+<p>The eNodeB can run several LTE cells. The cells can be configured
+individually and share the same S1 interface with the Core Network.
+
+<h4 class="subsection"><a name="TOC47"></a>7.6.1 Intra-band multi-cell</h4>
+
+<p>A configuration example is given in <samp><span class="file">config/multi_cell.cfg</span></samp> for
+two adjacent 5 MHz cells in band 7.
+
+   <p>The monitor command <code>cell_gain</code> changes the relative DL power for
+a given cell. For example, use
+<pre class="example">     cell_gain 1 -100
+</pre>
+   <p>to mute the first cell (cell_id = 1). Use:
+<pre class="example">     cell_gain 1 0
+</pre>
+   <p>to restore the default output power.
+
+   <p>Constraints:
+     <ul>
+<li>The full transmitted spectrum must lie inside the maximum output bandwidth permitted by the radio head (hence 20 MHz for the USRP N2x0). 
+<li>The difference of the center frequencies of each cell must be a multiple of 300 kHz (hence the difference of their EARFCN must be a multiple of 3). 
+<li>The cells must have the same <code>prach-ConfigIndex</code> (SIB2), i.e. their PRACH must have the same duration and transmitted in the same subframes. 
+<li>Multiple cells can be set at the same frequency provided their physical cell identity (<code>n_id_cell</code> property) and PRACH <code>rootSequenceIndex</code> (SIB2) are different to minimize the inter-cell interferences. In the current version, there is no resource reservation among the cells, so a performance degradation happens if they transmit at the same time in the same resource blocks. So it is currently better to use cells at different frequencies. 
+</ul>
+
+<h4 class="subsection"><a name="TOC48"></a>7.6.2 Inter-band multi-cell</h4>
+
+<p>A configuration example is given in <samp><span class="file">config/enb-ca.cfg</span></samp> for two
+SISO 5 MHz cells in bands 2 and 4. Two URSP N210 connected with a MIMO
+cable are needed to test this configuration.
+
+   <p>This configuration also enable carrier aggregation for release 10
+UEs.
+
+   <p>Notes for carrier aggregation:
+     <ul>
+<li>The eNodeB ignores the supported band combinations
+reported by the UE and always enable carrier aggregation for release
+10 UEs. 
+<li>The eNodeB supports up to 5 aggregated DL or UL carriers, depending on the available RF channels and CPU power. 2 DL and 1 UL carriers were tested with real UEs. 
+<li>Mixed FDD and TDD aggregated carriers are not supported yet. 
+</ul>
+
+<h3 class="section"><a name="TOC49"></a>7.7 Handover support</h3>
+
+<p>In the current version, handover is supported as an experimental
+feature. Intra-eNodeB, S1 or X2 handovers are supported. The handover
+can be manually initiated with the <code>handover</code> monitor command or
+automatically initiated based on UE measurement.
+
+   <p>Test case for intra-eNodeB handover:
+     <ol type=1 start=1>
+<li>Start lteenb with the multi cell configuration <samp><span class="file">config/multi_cell.cfg</span></samp>. 
+<li>Wait until the UE connects to a cell (use the <code>t</code> command to active the MAC traces or use the monitor command <code>ue</code> to list the connected UEs).
+
+     <li>Start a long network transfer or a ping to the UE.
+
+     <li>Reduce the power by 10 dB on the serving cell. If the UE is on cell 1:
+     <pre class="example">          cell_gain 1 -10
+</pre>
+     <p>After some time the UE will make a handover to cell 2 (check it
+with the <code>t</code> command by looking at the <code>CL</code> column).
+
+     <li>Increase the power of cell 1 and reduce the power of cell 2:
+     <pre class="example">          cell_gain 1 0 ; cell_gain 2 -10
+</pre>
+     <p>After some time the UE will make a handover to cell 1.
+
+     <li>You can also force a handover with the <code>handover</code> monitor command
+by giving the UE ID and the Physical Cell Identity (and optionally the
+DL EARFCN) of the target cell.
+
+        </ol>
+
+   <p>The behavior is similar with S1 and X2 handovers, but at least two
+eNodeBs (and two radio heads) are needed to use it.
+
+   <p>In all the cases, it is important to have a valid neighbour cell
+configuration for each cell (<code>ncell_list</code> property) so that the
+source eNodeB can deduce target the Cell Identity from the target
+Physical Cell Identity and DL EARFCN.
+
+<h3 class="section"><a name="TOC50"></a>7.8 MIMO support</h3>
+
+<p>MIMO is currently supported with following radio frontends:
+     <ul>
+  <li>USRP N2x0 with their SBX daughterboards (Two device are needed for MIMO). 
+  <li>USRP B2x0. 
+  <li>USRP X3x0. (Only up to 10Mhz bandwidth with gigabit Ethernet link). 
+  <li>Nutaq PicoSDR 2x2
+</ul>
+
+   <p>The configuration <samp><span class="file">mimo-2x2-5mhz.cfg</span></samp> demonstrates a 5 MHz MIMO
+configuration using transmission mode 3 (large delay CDD).
+
+   <p>The configuration <samp><span class="file">mimo-2x2-20mhz.cfg</span></samp> demonstrates a 20 MHz MIMO
+configuration with only one N2x0 connected by ethernet (second is
+using MIMO cable).
+
+   <p>Note: the current UHD driver uses a lot of CPU time when MIMO is
+enabled. If it is an issue in your tests, please contact Amarisoft to
+get a modified UHD driver which uses less CPU time.
+
+<h3 class="section"><a name="TOC51"></a>7.9 MIMO environment setup</h3>
+
+<h4 class="subsection"><a name="TOC52"></a>7.9.1 Over the air</h4>
+
+<p>To setup your MIMO environment here is a detailed diagram of how to proceed.
+
+   <div class="block-image"><img src="img/mimo1.png" alt="img/mimo1.png"></div>
+
+   <p>This configuration may have a bottle neck at ethernet side because USRP speed is limited to 1Gbps.<br>
+That's why for 20Mhz MIMO configuration, downlink sampling rate is limited to 8 (<code>dl_sample_bits</code> parameter).<br>
+You can remove this constraint with the following diagram:
+
+   <div class="block-image"><img src="img/mimo2.png" alt="img/mimo2.png"></div>
+
+<h4 class="subsection"><a name="TOC53"></a>7.9.2 Using cable</h4>
+
+<p>Note that the diagram provided below are only example.<br>
+You may adapt depending on the UE.
+
+<h5 class="subsubsection"><a name="TOC54"></a>7.9.2.1 FDD</h5>
+
+<p>If you are using FDD mode, the general case will be:
+
+   <div class="block-image"><img src="img/mimo3.png" alt="img/mimo3.png"></div>
+
+   <p>On most UE, second antenna is only used for RX so you can simplify with:
+
+   <div class="block-image"><img src="img/mimo4.png" alt="img/mimo4.png"></div>
+
+<h5 class="subsubsection"><a name="TOC55"></a>7.9.2.2 TDD</h5>
+
+<p>If your are using TDD mode, only one antenna is necessary per USRP.<br>
+Thus, you only need following diagram:
+
+   <div class="block-image"><img src="img/mimo5.png" alt="img/mimo5.png"></div>
+
+<h3 class="section"><a name="TOC56"></a>7.10 TDD support</h3>
+
+<p>The configuration file <samp><span class="file">enb-tdd.cfg</span></samp> is an example of TDD
+configuration. The eNodeB supports all 7 ULDL TDD configurations.
+
+<h2 class="chapter"><a name="TOC57"></a>8 Configuration reference</h2>
+
+<h3 class="section"><a name="TOC58"></a>8.1 Configuration file syntax</h3>
+
+<p>The main configuration file uses a syntax very similar to the
+Javascript Object Notation (JSON) with few extensions.
+
+     <ol type=1 start=1>
+<li>Supported types:
+
+          <ul>
+<li>Numbers (64 bit floating point). Notation: <code>13.4</code>
+<li>Complex numbers. Notation: <code>1.2+3*I</code>
+<li>Strings. Notation: <code> "string" </code>
+<li>Booleans. Notation: <code>true</code> or <code>false</code>. 
+<li>Objects. Notation: <code> { field1: </code><var>value1</var><code>, field2: </code><var>value2</var><code>, .... } </code>
+<li>Arrays. Notation: <code> [ </code><var>value1</var><code>, </code><var>value2</var><code>, .... ] </code>
+</ul>
+
+     <li>The basic operations <code>+</code>, <code>-</code>, <code>*</code> and <code>/</code> are
+supported with numbers and complex numbers.
+
+     <li>The numbers <code>0</code> and <code>1</code> are accepted as synonyms for the
+boolean values <code>false</code> and <code>true</code>.
+
+     <li>{} at top level are optional.
+
+     <li>" for property names are optional.
+
+     <li>Properties can be duplicated.<br>
+Merge will be done by recursively overriding values considering reading direction. 
+<pre class="verbatim">     {
+         value: "foo",
+         value: "bar",
+         sub: {
+             value: "foo"
+         },
+         sub: {
+             value: "bar"
+         }
+     }
+</pre>
+Will be equivalent to:
+<pre class="verbatim">     {
+         value: "bar",
+         sub: {
+             value: "bar"
+         }
+     }
+</pre>
+
+     <li>Files can be included using <var>include</var> keyword (must not be quoted) followed by a string (without :) representing the file to include (path is relative to current file) and terminating by a comma.<br>
+Arrays can't be included.<br>
+Merge will be done as for duplicate properties.<br>
+If <var>file1.cfg</var> is:
+<pre class="verbatim">         value: "foo",
+         include "file2.cfg",
+         foo: "foo"
+</pre>
+And <var>file2.cfg</var> is:
+<pre class="verbatim">         value: "bar",
+         foo: "bar"
+</pre>
+Final config will be:
+<pre class="verbatim">     {
+         value: "bar",
+         foo: "foo"
+     }
+</pre>
+
+        </ol>
+
+   <p>The System Information Blocks use the ASN.1 GSER syntax defined in RFC
+3641 (Generic String Encoding Rules for ASN.1 Types). The description
+of the exact content of the System Information Blocks can be found in
+3GPP TS 36.331 (RRC).
+
+<h3 class="section"><a name="TOC59"></a>8.2 Global properties</h3>
+
+     <dl>
+
+     <dt><code>log_filename</code><dd>
+String. Set the log filename. If no leading <code>/</code>, it is relative to the
+configuration file path. See <a href="#Log-file-format">Log file format</a>.
+
+     <p><a name="log_005foptions"></a><br><dt><code>log_options</code><dd>
+String. Set the logging options as a comma separated list of assignments.
+
+          <ul>
+
+          <li><var>layer</var>.level=<var>verbosity</var>. For each layer, the log verbosity can be set
+to <code>none</code>, <code>error</code>, <code>info</code> or <code>debug</code>. In debug
+level, the content of the transmitted data is logged.
+
+          <li><var>layer</var>.max_size=<var>n</var>. When dumping data content, at
+most <code>n</code> bytes are shown in hexa. For ASN.1 or NAS content, show the full content of the message if <code>n &gt; 0</code>.
+
+          <li><var>layer</var>.key=[0|1]. Dump security keys (NAS and RRC layers).
+
+          <li><var>layer</var>.crypto=[0|1]. Dump plain and ciphered data (NAS, RRC and PCDP layers).
+
+          <li>time=[sec|short|full]. Display the time as seconds, time only
+or full date and time (default = time only).
+
+          <li>file=cut. Close current file log and open a new one.
+
+          <li>file.rotate=now. Rename current log with timestamp and open new one.
+
+          <li>file.rotate=<var>size</var>. Rename current log every time it reaches <var>size</var> bytes open new one. 
+  Size is an integer and can be followed by K, M or G.
+
+          <li>file.path=<var>path</var>. When log rotation is enabled, move current log to this path instead of
+  initial log path.
+
+          <li>bcch=[0|1]. Enable or disable BCCH log. The BCCH is always
+transmitted, so it gives large logs when enabled.
+
+          <li>append=[0|1]. (default=0). If 0, truncate the log file when
+  opening it. Otherwise, append to it.
+
+     </ul>
+
+     <p>Available layers are: <code>phy</code>, <code>mac</code>, <code>rlc</code>, <code>pdcp</code>, <code>rrc</code>, <code>nas</code>, <code>s1ap</code>, <code>x2ap</code>, <code>gtpu</code>
+
+     <br><dt><code>pcap</code><dd>Optional object. Gives the Wireshark capture options. The
+<code>mac-lte-framed</code> protocol using link-layer type 147 is supported (<a href="http://wiki.wireshark.org/MAC-LTE">http://wiki.wireshark.org/MAC-LTE</a>). In order to enable it in Wireshark, go to the menu <code>Edit-&gt;Preferences-&gt;protocols-&gt;DLT_USER-&gt;Edit-&gt;New</code> and add the DLT type 147 (User 0) with payload protocol <code>mac-lte-framed</code>.
+
+          <dl>
+  <dt><code>filename</code><dd>  String. Filename in which the capture is stored. 
+  <br><dt><code>bcch</code><dd>  Optional boolean (default = false). If true, the BCCH SI PDUs are
+  logged. It is disabled by default because the capture size increases
+  even when the eNodeB is idle. 
+  <br><dt><code>max_data_len</code><dd>  Optional integer (default = 65536). Maximum captured MAC PDU length
+  per packet. 
+  <br><dt><code>mac_lte_ext</code><dd>  Optional boolean (default = false). Output additional MAC and PHY
+  information. A recent (after Jan 1, 2014) development version of
+  Wireshark is required to use it. 
+  <br><dt><code>use_pipe</code><dd>  Optional boolean (default = false). Capture in a pipe instead of a regular pipe. This allow live capture with wireshark: <code>wireshark -k -i &lt;filename&gt;</code>. 
+  Note that it can be used only once as wireshark requires initial header. 
+  </dl>
+
+     <br><dt><code>enb_name</code><dd>
+Optional string. Set eNB name used in S1 connection setup request.
+
+     <br><dt><code>gtp_addr</code><dd>
+String. Set the IP address (and optional port) on which the GTP-U
+packets are received. The default port is 2152. It is normally the IP
+address of the network interface connected to the core network.
+
+     <br><dt><code>mme_list</code><dd>Array of objects. List of MME to which the eNodeB is connected. Each
+object contains the following properties:
+
+          <dl>
+  <dt><code>mme_addr</code><dd>
+  String. Set the IP address (and optional port) of S1AP SCTP
+  connection to the MME. The default port is 36412.
+
+          <p>Syntax:
+               <ul>
+<li>"1.2.3.4"  (use default port)
+<li>"1.2.3.4:5678" (use explicit port)
+<li>"2001:db8:0:85a3::ac1f:8001" (IPv6 address and default port)
+<li>"[2001:db8:0:85a3::ac1f:8001]:5678" (IPv6 address and explicit port)
+</ul>
+
+          <br><dt><code>gtp_ext_addr</code><dd>
+  Optional string. Set the IP address on which the Core Network should
+  transmit the GTP-U packets. It is the same as gtp_addr by
+  default. It can be different if eNodeB is behind a NAT.
+
+          <br><dt><code>s1ap_bind_addr</code><dd>  Optional string. IP address and optional port on which the S1AP SCTP
+  connection is bound.
+
+          <br><dt><code>x2ap_bind_addr</code><dd>  Optional string. IP address and optional port on which the X2AP SCTP
+  connection is bound.
+
+     </dl>
+
+     <p>For backward compatibility, if <code>mme_list</code> is omitted, then a
+single MME is assumed and the properties <code>mme_addr</code>,
+<code>gtp_ext_addr</code> and <code>s1ap_bind_addr</code> are expected at the top
+level.
+
+     <br><dt><code>x2_peers</code><dd>Optional array of strings. IP addresses and optional port of other
+eNodeBs to establish X2 connections. The default port is 36422.
+
+     <br><dt><code>mcc</code><dd>String. The MCC part of the PLMN (3 digits). This property is
+obsolete. Use <code>plmn_list</code> instead.
+
+     <br><dt><code>mcc</code><dd>String. The MNC part of the PLMN (2 or 3 digits). This property is
+obsolete. Use <code>plmn_list</code> instead.
+
+     <br><dt><code>enb_type</code><dd>Optional enumeration: macro or home (default = macro). Select between
+macro or home eNodeB.
+
+     <br><dt><code>enb_id</code><dd>Integer. The 20 bit (macro) or 28 bit (home) eNodeB global identifier
+
+     <br><dt><code>rf_driver</code><dd>Object. Parameters of the radio driver. See <a href="#Radio-driver-configuration">Radio driver configuration</a>.
+
+     <br><dt><code>tx_gain</code><dd>Float or array of floats. Transmit gain in dB. The range is device
+dependent. For the USRP N2x0 device with the SBX daughterboard, the
+range is 0 to 31.5 dB. With an array of float a different gain is
+specified for each channel.
+
+     <br><dt><code>rx_gain</code><dd>Float or array of floats. Receive gain in dB. The range is device
+dependent. For the USRP N2x0 device with the SBX daughterboard, the
+range is 0 to 31.5 dB. With an array of float a different gain is
+specified for each channel.
+
+     <br><dt><code>tx_gain_offset</code><dd>Optional float (default = -11 dB). Set the digital gain. Warning: do
+not change it unless you know what you do because a too high value
+introduces saturation in the output.
+
+     <br><dt><code>com_addr</code><dd>Optional string. Address of the web socket server remote API. See <a href="#Remote-API">Remote API</a>.<br>
+If set, the web socket server for remote API will be enabled and bound to this address.<br>
+Default port is 9000.<br>
+Setting IP address to 0.0.0.0 will make remote API reachable through all network interfaces.
+
+     <br><dt><code>com_name</code><dd>Optional string. Sets server name. ENB by default
+
+     <br><dt><code>cell_list</code><dd>Array of object. Each element gives the configuration of a cell. The
+property <code>cell_default</code> gives a default value for each
+property. See <a href="#Cell-configuration">Cell configuration</a>.
+
+     <br><dt><code>cell_default</code><dd>Optional Object. Gives a default value for the cell configuration.
+
+</dl>
+
+<h3 class="section"><a name="TOC60"></a>8.3 Advanced properties</h3>
+
+     <dl>
+<dt><code>dl_freq</code><dd>Optional float. Tuning frequency in MHz for the downlink. It is
+automatically set to the average of the DL center frequency of each
+cell.
+
+     <p>In the multi-cell case, if the radio head has a degraded output near
+the center of the transmitted spectrum (which is the case for zero IF
+TX or RX architectures), it is interesting to move the center of the
+transmitted spectrum outside the spectrum of every cell or in the
+middle of the spectrum of a given cell.
+
+     <p>In this case, the <code>dl_freq</code> property can be used. It must be set
+so that for each cell <code>dl_freq - dl_cell_freq</code> is a multiple of
+15 kHz (<code>dl_freq_cell</code> is assumed to be the center frequency of a
+cell).
+
+     <p>Note: if you want to use non standard LTE frequencies, use the
+<code>custom_freq_band</code> option.
+
+     <br><dt><code>ul_freq</code><dd>Optional float. Tuning frequency in MHz for the uplink. It is
+automatically set to the average of the UL center frequency of each
+cell.
+
+     <p>Same remark as <code>dl_freq</code>.
+
+     <br><dt><code>sample_rate</code><dd>Optional float. Sample rate in MHz. It is normally automatically set
+depending on the radio head capabilities and selected cell bandwidth.
+
+     <br><dt><code>sample_rate_num</code><dd>Optional integer. Main sample rate used for the LTE signal processing
+in 1.92 MHz units (hence 3 means 5.76 MHz). It is normally
+automatically set depending on the radio head capabilities and
+selected cell bandwidth. If the resulting rate is different from
+<code>sample_rate</code>, a fractional sample rate interpolator is used to
+convert the sample rate.
+
+     <br><dt><code>tx_time_offset</code><dd>Optional integer. Time offset (in samples) for the TX stream relative
+to the RX stream. It may be needed to compensate internal delays in
+the radio head.
+
+     <br><dt><code>custom_freq_band</code><dd>Optional object. Define a non standard LTE frequency band. Standard
+bands can also be overriden by this option. If the uplink information
+is not provided, it is assumed to be the same as the downlink (TDD
+band).
+
+          <dl>
+  <dt><code>band</code><dd>  Range: 1 to 256. 
+  <br><dt><code>dl_earfcn_min</code><dd>  Range: 0 to 262143. 
+  <br><dt><code>dl_earfcn_max</code><dd>  Range: 0 to 262143. 
+  <br><dt><code>dl_freq_min</code><dd>  Float. Low DL frequency in MHz. 
+  <br><dt><code>ul_earfcn_min</code><dd>  Optional integer. Range: 0 to 262143. 
+  <br><dt><code>ul_earfcn_max</code><dd>  Optional integer. Range: 0 to 262143. 
+  <br><dt><code>ul_freq_min</code><dd>  Optional Float. Low UL frequency in MHz. 
+  </dl>
+
+     <br><dt><code>papr_reduction</code><dd>Optional object. Define the parameters for Peak to Average Power Ratio
+(PAPR) reduction. It is only useful if you use a high power
+amplifier. In the current version it takes a significant amount of CPU
+time, so it is only usable for LTE bandwidth &lt;= 10 MHz.
+
+     <p>The following properties are available:
+
+          <dl>
+  <dt><code>enabled</code><dd>  Boolean. If true, PAPR reduction is enabled. 
+  <br><dt><code>a_max</code><dd>  Float. Set the cut-off level in dB relative to the
+  Reference Signal power. 
+  <br><dt><code>evm_max</code><dd>  Float. Set the maximum Error Vector Magnitude (EVM) for 64QAM. 
+  <br><dt><code>oob_points</code><dd>  Array of floats. Each pair of number defines a point of the
+  maximum allowed distorsion curve. The first number is the frequency
+  offset in MHz from the edge of the LTE spectrum. The second number
+  is the power level in dB. The actual curve is linearly interpolated
+  between the points. 
+  </dl>
+
+     <p>An example of use is given in the configuration <samp><span class="file">enb-1_4mhz.cfg</span></samp>.
+
+</dl>
+
+<!-- Other sections -->
+   <p><a name="Radio-driver-configuration"></a>
+
+<h3 class="section"><a name="TOC61"></a>8.4 Radio driver configuration</h3>
+
+<p>The <code>name</code> property selects the driver. The corresponding DLL
+file name is <samp><span class="file">trx_</span><var>name</var><span class="file">.so</span></samp>. It is searched in the lteenb
+executable directory, in <samp><span class="file">/usr/lib/lteenb</span></samp> and
+<samp><span class="file">/usr/local/lib/lteenb</span></samp>. The following drivers are currently
+available:
+
+     <dl>
+<dt><code>dummy</code><dd>Dummy driver. Can be used to measure the RX to TX latency.
+
+     <br><dt><code>uhd</code><dd>Ettus Research UHD driver for USRP N2x0, B2x0 and X3x0 series.
+
+     <br><dt><code>perseus</code><dd>Nutaq driver for PicoSDR 2x2.
+
+   </dl>
+
+<h4 class="subsection"><a name="TOC62"></a>8.4.1 Dummy driver</h4>
+
+<p>No specific properties are available.
+
+<h4 class="subsection"><a name="TOC63"></a>8.4.2 UHD driver</h4>
+
+<p>The following properties are available:
+
+     <dl>
+<dt><code>args</code><dd>String. Set the UHD specific arguments (they are defined in the UHD documentation).
+
+     <br><dt><code>sync</code><dd>Optional string. Select the synchronization type. <code>none</code> is the
+default value and selects the internal clock. <code>external</code> selects
+an external clock and PPS. <code>mimo</code> selects the N2x0 MIMO
+cable. <code>external_clock</code> selects an external clock but keeps the
+internal PPS.
+
+     <br><dt><code>dl_sample_bits</code><dd>Optional integer (default = 16). Se the number of bits per DL
+sample. Allowed values are 8, 12 or 16.
+
+     <br><dt><code>ul_sample_bits</code><dd>Optional integer (default = 16). Se the number of bits per UL
+sample. Allowed values are 8, 12 or 16 (Use 8 bites carefully).
+
+     <br><dt><code>tx_subdev</code><dd>Optional string. Sets tx subdev as specified in <a href="http://files.ettus.com/manual/classuhd_1_1usrp_1_1multi__usrp.html#a3b8d9d9fb9a1ec51e81a207cd299e517">UHD API</a>.
+
+     <br><dt><code>rx_subdev</code><dd>Optional string. Sets rx subdev as specified in <a href="http://files.ettus.com/manual/classuhd_1_1usrp_1_1multi__usrp.html#a7f94ed00059cc7dd30567d031b3f9679">UHD API</a>.
+
+   </dl>
+
+   <p><a name="Cell-configuration"></a>
+
+<h3 class="section"><a name="TOC64"></a>8.5 Cell configuration</h3>
+
+<h4 class="subsection"><a name="TOC65"></a>8.5.1 Basic parameters</h4>
+
+<p>These parameters are the most important ones and must usually be
+modified when a new cell is added.
+
+     <dl>
+<dt><code>plmn_list</code><dd>Array of objects or strings. List of PLMNs broadcasted by the
+eNodeB. At most 6 PLMNs are supported. Each element of the array is
+either a PLMN (5 or 6 digit string) or an object containing the
+following properties:
+          <dl>
+  <dt><code>plmn</code><dd>  String. PLMN (5 or 6 digits). 
+  <br><dt><code>reserved</code><dd>  Boolean. True if the cell is reserved for operator use. 
+  </dl>
+
+     <p>When <code>reserved</code> is not provided, its default value is <code>false</code>.
+
+     <br><dt><code>dl_earfcn</code><dd>Range: 0 to 262143. Set the DL EARFCN. See
+<a href="http://niviuk.free.fr/lte_band.php">http://niviuk.free.fr/lte_band.php</a> to convert between the center frequency
+and EARFCN.
+
+     <p>When several cells share the same radio front end, the difference of
+their center DL frequency must be a mutiple of 300 kHz (i.e. the
+difference of their DL EARFCN must be a multiple of 3).
+
+     <br><dt><code>ul_earfcn</code><dd>Optional. Range: 0 to 262143. Set the UL EARFCN. If not provided, the
+default DL/UL gap is used (i.e. ul_earfcn = dl_earfcn +
+18000). <code>ul-CarrierFreq</code> in SIB2 is automatically set to the
+corresponding value.
+
+     <p>When several cells share the same radio front end, the difference of
+their center UL frequency must be a mutiple of 300 kHz (i.e. the
+difference of their UL EARFCN must be a multiple of 3).
+
+     <br><dt><code>multi_band_list</code><dd>
+Optional array of integers. List the additional bands supported by the
+cell, in decreasing priority order (MFBI feature). The downlink and
+uplink frequency of the cell must exist in all these bands.
+
+     <br><dt><code>cell_id</code><dd>Range: 0 to 255. 8 bit cell identifier. For a macro eNodeB, the 28 bit
+cell identifier is the concatenation of <code>enb_id</code> and
+<code>cell_id</code>.
+
+     <br><dt><code>tac</code><dd>Range: 0 to 65535. Tracking Area Code of the cell.
+
+     <br><dt><code>n_id_cell</code><dd>Range: 0 to 503. Physical cell identifier. Each neighbour cell
+operating on the same frequency must have a different physical cell
+identifier modulo 3.
+
+     <br><dt><code>root_sequence_index</code><dd>Range: 0 to 837. Set the PRACH root sequence index. It must be
+different for each neighbour cell operating on the same frequency and
+sharing the same PRACH configuration.
+
+     <br><dt><code>ncell_list</code><dd>Optional array of objects. List of neighbour cells. Used for to
+convert the physical cell identity and EARFCN to a cell identity in
+case of handover. Each neighbour cell is defined by the following
+properties:
+
+          <dl>
+  <dt><code>n_id_cell</code><dd>  Range: 0 to 503. Physical cell identity. 
+  <br><dt><code>dl_earfcn</code><dd>  Optional. Range 0 to 262143. DL EARFCN. If not present, it is assumed
+to be the same as the current cell. 
+  <br><dt><code>plmn</code><dd>  Optional string. PLMN of the cell (5 or 6 digits). The default is
+  the same PLMN as the eNB. 
+  <br><dt><code>cell_id</code><dd>  Integer. 28 bit cell identifier. 
+  <br><dt><code>tac</code><dd>  Range: 0 to 65535. Tracking Area Code. 
+  <br><dt><code>type</code><dd>  Optional string. Can be "macro" (default) for macro eNB or "home" for home eNB. Only used for S1 handover. 
+  </dl>
+
+     <br><dt><code>n_rb_dl</code><dd>Integer. Range: 6 to 100. Set the number of DL resource blocks. The
+corresponding LTE bandwidth can be deduced from the following table:
+
+          <dl>
+<dt><code>6</code><dd>1.4 MHz
+<br><dt><code>15</code><dd>3 MHz
+<br><dt><code>25</code><dd>5 MHz
+<br><dt><code>50</code><dd>10 MHz
+<br><dt><code>75</code><dd>15 MHz
+<br><dt><code>100</code><dd>20 MHz
+</dl>
+
+     <p>Note: It is always necessary to modify the SIB2 when changing the LTE
+bandwidth.
+
+   </dl>
+
+<h4 class="subsection"><a name="TOC66"></a>8.5.2 Advanced parameters</h4>
+
+     <dl>
+<dt><code>n_antenna_dl</code><dd>Enumeration: 1, 2, 4 or 8. Number of DL antennas. Currently 1 (SISO)
+or 2 (MIMO 2x2) are supported.
+
+     <br><dt><code>n_antenna_ul</code><dd>Enumeration: 1, 2, 4 or 8. Number of UL antennas. Currently 1 (SISO)
+or 2 (MIMO 2x2) are supported.
+
+     <br><dt><code>n_antenna_pbch</code><dd>Optional enumeration: 1, 2 or 4 (default = n_antenna_dl). Number of
+PBCH antennas. Must be &lt;= n_antenna_dl.
+
+     <br><dt><code>rf_port</code><dd>Optional integer (default = 0). This parameter selects the RF port
+when several cells on different RF interfaces or RF bands are handled
+by the eNodeB. The number of supported RF ports depends on the radio
+head. For example, each N210 counts as one RF port.
+
+     <br><dt><code>cyclic_prefix</code><dd>Enumeration: normal or extended. Set the DL cyclic prefix.
+
+     <br><dt><code>uldl_config</code><dd>(TDD only) Range: 0 to 6. TDD frame configuration.
+
+     <br><dt><code>sp_config</code><dd>(TDD only) Range: 0 to 9. TDD special subframe configuration. The
+special subframe 7 (with extended cyclic prefix) and 9 (with normal
+cyclic prefix) from the release 11 are supported.
+
+     <br><dt><code>power_p_sync</code><dd>Optional float (default = 0). Set the relative power in dB of the Primary
+Synchronization Signal.
+
+     <br><dt><code>power_s_sync</code><dd>Optional float (default = 0). Set the relative power in dB of Secondary
+Synchronization Signal.
+
+     <br><dt><code>power_pcfich</code><dd>Optional float (default = 0). Set the relative power in dB of PCFICH.
+
+     <br><dt><code>power_pbch</code><dd>Optional float (default = 0). Set the relative power in dB of PBCH.
+
+     <br><dt><code>power_phich</code><dd>Optional float (default = 0). Set the relative power in dB of PHICH.
+
+     <br><dt><code>power_pdcch</code><dd>Optional float (default = 0). Set the relative power in dB of PDCCH.
+
+     <br><dt><code>power_pdsch_si</code><dd>Optional float (default = 0). Set the relative power in dB of PDSCH
+when transmitting SI/RA/P-RNTI information.
+
+     <br><dt><code>phich_duration</code><dd>Enumeration: normal or extended. Set the PHICH duration.
+
+     <br><dt><code>phich_resource</code><dd>Enumeration: 1/6, 1/2, 1 or 2. Set the PHICH resource.
+
+     <br><dt><code>sib1</code><dd>String. Filename of the textual ASN.1 content (GSER syntax) for
+SIB1. The fields <code>plmn-Identity</code>, <code>trackingAreaCode</code>,
+<code>cellIdentity</code> and <code>freqBandIndicator</code> are automatically
+modified by the eNodeB.
+
+     <br><dt><code>sib_sched_list</code><dd>Array of strings. Filenames of the other SIBs in the same order as the
+scheduling list in SIB1. The first entry must contain the SIB2. The
+content is in textual ASN.1 (GSER syntax).
+
+     <p>The eNodeB uses parameters from SIB2 for its configuration. The SIB2
+field <code>rootSequenceIndex</code> is automatically modified by the eNodeB.
+
+     <br><dt><code>si_coderate</code><dd>Float. Maximum code rate for System Information Blocks (SIBs).
+
+     <br><dt><code>rar_coderate</code><dd>Optional float. Maximum code rate for Random Access Response (RAR) (default = same as <code>si_coderate</code>).
+
+     <br><dt><code>paging_coderate</code><dd>Optional float. Maximum code rate for paging messages (default = same as <code>si_coderate</code>).
+
+     <br><dt><code>paging_cat0_coderate</code><dd>Optional float. Maximum code rate for paging messages for category 0 UEs (default = same as <code>paging_coderate</code>).
+
+     <br><dt><code>si_pdcch_format</code><dd>Range: 2 to 3. Log2 of the number of CCEs for PDCCH for SIBs.
+
+     <br><dt><code>rar_pdcch_format</code><dd>Optional. Range: 2 to 3. Log2 of the number of CCEs for PDCCH for RAR (default = same as <code>si_pdcch_format</code>).
+
+     <br><dt><code>paging_pdcch_format</code><dd>Optional. Range: 2 to 3. Log2 of the number of CCEs for PDCCH for paging (default = same as <code>si_pdcch_format</code>).
+
+     <br><dt><code>paging_cat0_pdcch_format</code><dd>Optional. Range: 2 to 3. Log2 of the number of CCEs for PDCCH for paging for category 0 UEs (default = same as <code>paging_pdcch_format</code>).
+
+     <br><dt><code>sib_sfn_offset</code><dd>Optional array of integer. If present, set the offsets of the SIBs in
+the SI window. At most 4 offsets are allowed. If it not present, the
+eNodeB uses default values.
+
+     <br><dt><code>n_symb_cch</code><dd>Range: 1 to 4. Number of symbols for CCH.
+
+     <br><dt><code>half_duplex_ue</code><dd>Optional boolean (default = true). If false, assume full duplex UEs
+even before the actual UE capabilities are received (test only).
+
+     <br><dt><code>allow_cat0_ue</code><dd>Optional boolean (default = false). If true, category 0 UEs (release
+12) can connect to the eNodeB. The corresponding SIB1 field is set and
+the scheduler takes the category 0 UE scheduling restrictions into
+account.
+
+     <br><dt><code>pdsch_dedicated</code><dd>Object. PDSCH dedicated configuration. Currently shared by all
+UEs. The following properties are defined:
+
+          <dl>
+  <dt><code>p_a</code><dd>  Enumeration: -6, -4.77, -3, -1.77, 0, 1, 2, 3. Set the <code>p_a</code>
+parameter which sets the PDSCH average power.
+
+          <br><dt><code>dmrs</code><dd>  Optional array of 2 integers. Range: 0 to 503. Specifies the
+  DMRS scrambling identity when transmission mode 10 is used (release 11).
+
+          <br><dt><code>qcl_operation</code><dd>  Optional enumeration: <code>typeA</code> or <code>typeB</code> (default =
+  <code>typeB</code>).  Select the PDSCH Quasi Co-Location parameter when
+  transmission mode 10 is used (release 11). Note that this parameter
+  does not modify the eNodeB behavior, it just changes the value of
+  the corresponding RRC field.
+
+     </dl>
+
+     <br><dt><code>pdcch_format</code><dd>Optional. Range: 0 to 3. If defined, force for number of CCEs for UE
+specific PDCCH to <code>2^pdcch_format</code>. Otherwise it is computed from
+the reported CQI.
+
+     <br><dt><code>initial_cqi</code><dd>Range: 0 to 15. This CQI value is assumed when none is received from the UE.
+
+     <br><dt><code>pdsch_mcs</code><dd>Range: 0 to 28. Force the PDSCH MCS (test feature). Note: the actual
+MCS selected by the scheduler may be different in order to keep the
+same average code rate.
+
+     <br><dt><code>pdsch_fixed_rb_alloc</code><dd>Optional boolean (default = false). If true, force fixed PDSCH RB
+allocation using the parameters <code>pdsch_fixed_rb_start</code> and
+<code>pdsch_fixed_l_crb</code>. The actual allocated PDSCH RBs are a subset
+of the selected RBs.
+
+     <br><dt><code>pdsch_fixed_rb_start</code><dd>Optional integer. First RB for fixed PDSCH allocation (see
+<code>pdsch_fixed_rb_alloc</code>).
+
+     <br><dt><code>pdsch_fixed_l_crb</code><dd>Optional integer. Number of consecutive RBs for fixed PDSCH allocation
+(see <code>pdsch_fixed_rb_alloc</code>).
+
+     <br><dt><code>pucch_dedicated</code><dd>Optional object. PUCCH dedicated configuration. Currently shared by
+all UEs.
+
+          <dl>
+  <dt><code>tdd_ack_nack_feedback_mode</code><dd>  (TDD only) Enumeration: <code>bundling</code> or
+  <code>multiplexing</code>. Define the ACK/NACK feedback mode for TDD.
+
+          <br><dt><code>tdd_ack_nack_feedback_mode_r10</code><dd>  (TDD only) Optional enumeration: <code>bundling</code>,
+  <code>multiplexing</code>, <code>cs</code>, <code>pucch3</code>. Select the ACK/NACK
+  feedback mode for release 10 TDD UE. <code>cs</code> means channel
+  selection. By default it is the same as
+  <code>tdd_ack_nack_feedback_mode</code>.
+
+          <br><dt><code>ack_nack_feedback_mode_ca</code><dd>  Optional enumeration: <code>cs</code>, <code>pucch3</code>. Select the ACK/NACK
+  feedback mode when two serving cells are enabled (carrier
+  aggregation). When more than two serving cells are enabled,
+  <code>pucch3</code> is always used.
+
+          <br><dt><code>n1_pucch_an_cs_count</code><dd>  Optional integer (default = 0). Select the number of PUCCH 1
+  resources used for PUCCH 1B channel selection. It is only useful
+  when <code>ack_nack_feedback_mode_ca</code> is set to <code>cs</code>. This
+  value limits the number of UEs which can be scheduled in the same
+  TTI while doing carrier aggregation.
+
+          <br><dt><code>n3_pucch_an_n_rb</code><dd>  Optional integer (default = 0). Select the number of UL resources
+  blocks reserved for PUCCH 3 signalling. It is only necessary if PUCCH
+  3 ACK/NACK feedback is selected for carrier aggregation or TDD.
+
+     </dl>
+
+     <br><dt><code>pusch_dedicated</code><dd>Object. PUSCH dedicated configuration. Currently shared by all
+UEs. The following properties are defined:
+
+          <dl>
+  <dt><code>beta_offset_ack_index</code><dd>  Range: 0 to 15. 
+  <br><dt><code>beta_offset_ri_index</code><dd>  Range: 0 to 12. 
+  <br><dt><code>beta_offset_cqi_index</code><dd>  Range: 2 to 15. 
+  </dl>
+
+     <br><dt><code>pusch_msg3_delta_power</code><dd>Optional. Range: -6 to 8 (default = 0). Relative power for Msg3 (=CCCH
+RRC Connection Request) in dB. It is internally rounded to an even
+value.
+
+     <br><dt><code>pusch_msg3_mcs</code><dd>Range: 0 to 15. MCS for Msg3 (=CCCH RRC Connection Request).
+
+     <br><dt><code>pusch_mcs</code><dd>Optional. Range: 0 to 28. If defined, force the PUSCH MCS for all UEs
+(test feature). Otherwise it is computed from the last received
+SRS/PUSCH.
+
+     <br><dt><code>pusch_fixed_rb_alloc</code><dd>Optional boolean (default = false). If true, force fixed PUSCH RB
+allocation using the parameters <code>pusch_fixed_rb_start</code> and
+<code>pusch_fixed_l_crb</code>. <code>pusch_fixed_l_crb</code> must
+be of the form <code>2^n1*3^n2*5^n3</code>. PUSCH are allocated only if they
+don't overlap with PUCCH or PRACH, so care must be taken when defining
+the range. In some cases, PUSCH retranmissions may use other RBs.
+
+     <br><dt><code>pusch_fixed_rb_start</code><dd>Optional integer. First RB for fixed PUSCH allocation (see
+<code>pusch_fixed_rb_alloc</code>).
+
+     <br><dt><code>pusch_fixed_l_crb</code><dd>Optional integer. Number of consecutive RBs for fixed PUSCH allocation
+(see <code>pusch_fixed_rb_alloc</code>).
+
+     <br><dt><code>pusch_multi_cluster</code><dd>Optional boolean (default = false). If true, enable multi-cluster
+PUSCH resource allocation for the UEs supporting it (release
+10). Note: this is a UE test feature, so the multi cluster allocation
+is not optimized by the scheduler.
+
+     <br><dt><code>transmission_mode</code><dd>Optional. Range: 1 to 6 (default = 1). Set the DL transmission mode
+(same for all UEs). The values of 1 and 2 are equivalent and
+automatically adjusted to 1 or 2 depending on the number of
+DL antennas. The corresponding transmission modes are:
+
+          <dl>
+<dt><code>1</code><dd>Single antenna port. 
+<br><dt><code>2</code><dd>Transmit diversity. 
+<br><dt><code>3</code><dd>Large delay CDD. 
+<br><dt><code>4</code><dd>Closed-loop spatial multiplexing. 
+<br><dt><code>5</code><dd>Multi-user MIMO. 
+<br><dt><code>6</code><dd>Closed-loop spatial multiplexing using single transmission layer. 
+</dl>
+
+     <p>Notes:
+          <ul>
+<li>Transmission modes 2 to 6 are only usable when <code>n_antenna_dl &gt;=
+2</code> (more than one DL antenna).
+
+          <li>Transmission modes 3 and 4 need rank indicator reporting for proper
+operation (see the <code>m_ri</code> parameter).
+
+          <li>Currently only <code>n_antenna_dl</code> = 1 or 2 were tested.
+
+          <li>The current MAC scheduler does not schedule several UE at the same
+time when using transmission mode 5. 
+</ul>
+
+     <br><dt><code>codebook_subset_restriction</code><dd>Optional string. Bit string giving the allowed code book indexes for
+transmission modes 3, 4, 5, 6. The number of bits is given by TS.36
+213 table 7.2-1b. The default value is all ones (i.e. all code book
+indexes are allowed).
+
+     <br><dt><code>transmission_mode_opt</code><dd>Optional integer (default = 0). Range: 0 or 7 to 10. If the UE
+supports the indicated transmission mode, it is enabled with the
+first RRC connection reconfiguration. The value 0 is used to keep the
+initial transmission mode selected by <code>transmission_mode</code>. The
+available optional transmission modes are:
+
+          <dl>
+<dt><code>7</code><dd>Antenna port 5 (UE specific, release 8). 
+<br><dt><code>8</code><dd>Dual layers, antenna ports 7 and 8 (UE specific, release 9). 
+<br><dt><code>9</code><dd>Up to 8 layers, antenna ports 7 to 14 (UE specific, release 10). 
+<br><dt><code>10</code><dd>Up to 8 layers, antenna ports 7 to 14 (UE specific, CoMP, release 11). 
+</dl>
+
+     <p>The transmission modes 8, 9 and 10 require at least two DL antennas.
+
+     <br><dt><code>codebook_subset_restriction_opt</code><dd>Optional string. Bit string giving the allowed code book indexes for
+transmission modes 8, 9 or 10. The number of bits depends on the
+selected transmission mode and number of DL antennas:
+
+          <dl>
+<dt><code>tm8, 2 antennas:</code><dd>6 bits
+<br><dt><code>tm8, 4 antennas:</code><dd>32 bits
+<br><dt><code>tm9 or tm10, 2 antennas:</code><dd>6 bits
+<br><dt><code>tm9 or tm10, 4 antennas:</code><dd>64 bits
+<br><dt><code>tm9 or tm10, 8 antennas:</code><dd>109 bits
+</dl>
+
+     <br><dt><code>n_scid</code><dd>Optional integer (default = 0). Range 0 to 1. Force the scrambling
+identifier when antenna ports 7 or 8 are used.
+
+     <br><dt><code>ue_specific_port</code><dd>Optional integer (default = 7). Range 7 to 8. When single layer
+transmission is used with transmission mode 8, force the corresponding
+antenna port.
+
+     <br><dt><code>csi_rs_nzp</code><dd>Optional object. Specifies the Non-Zero Power Channel-State Information
+Reference Signals (CSI-RS) sent by the eNodeB for release 10 UEs. The
+following fields are defined:
+
+          <dl>
+  <dt><code>period</code><dd>  Enumeration: 5, 10, 20, 40, 80. Period (in ms) of the CSI-RS.
+
+          <br><dt><code>offset</code><dd>  Range: 0 to period - 1. Offset (in ms) of the CSI-RS.
+
+          <br><dt><code>n_antenna</code><dd>  Integer: 1, 2, 4 or 8. Must be less than the number of DL antennas.
+
+          <br><dt><code>resource_config</code><dd>  Integer. Selected CSI-RS resource configuration. The exact range
+  depends on the selected cyclic prefix and frame structure. See
+  tables 6.10.5.2-1 and 6.10.5.2-2 from TS 36.211.
+
+          <br><dt><code>p_c</code><dd>  Range: -8 to 15. Relative power in dB compared to the cell specific
+  reference signal.
+
+     </dl>
+
+     <br><dt><code>csi_rs_zp</code><dd>Optional object. Specifies the Zero Power Channel-State Information
+Reference Signals reserved by the eNodeB for release 10 UEs. The
+following fields are defined:
+
+          <dl>
+  <dt><code>period</code><dd>  Enumeration: 5, 10, 20, 40, 80. Period (in ms) of the CSI-RS ZP.
+
+          <br><dt><code>offset</code><dd>  Range: 0 to period - 1. Offset (in ms) of the CSI-RS ZP.
+
+          <br><dt><code>resource_config_list</code><dd>  Range: 0 to 65535. Bit mask of the selected zero CSI-RS ZP
+  configurations. The first configuration is in bit 15. The
+  corresponding configurations are given in tables 6.10.5.2-1 and
+  6.10.5.2-2 from TS 36.211 (column with 4 antennas).
+
+     </dl>
+
+     <br><dt><code>csi_rs_im</code><dd>Optional object. Specifies the Channel-State Information Reference
+Signals reserved by the eNodeB for Interference Measurement for
+release 11 UEs (CSI-RS IM). The following fields are defined:
+
+          <dl>
+  <dt><code>period</code><dd>  Enumeration: 5, 10, 20, 40, 80. Period (in ms) of the CSI-RS IM.
+
+          <br><dt><code>offset</code><dd>  Range: 0 to period - 1. Offset (in ms) of the CSI-RS IM.
+
+          <br><dt><code>resource_config</code><dd>  Integer. Selected CSI-RS IM resource configuration. The exact range
+  depends on the selected cyclic prefix and frame structure. See
+  tables 6.10.5.2-1 and 6.10.5.2-2 from TS 36.211.
+
+     </dl>
+
+     <p>The CSI-RS IM must completely overlap with the configured CSI-RS ZP.
+
+     <br><dt><code>dl_256qam</code><dd>Optional boolean (default = false). If true, allow 256QAM DL support
+for the UE supporting it (release 12).
+
+     <br><dt><code>sr_period</code><dd>Enumeration: 5, 10, 20, 40, 80, 2, 1. Scheduling Request period in
+ms. Currently when <code>half_duplex_ue</code> is true it must be &gt;= 40.
+
+     <br><dt><code>dsr_trans_max</code><dd>Optional enumeration: 4, 8, 16, 32, 64 (default = 4). Set the
+dsr-TransMax parameter (maximum number of scheduling request
+transmissions).
+
+     <br><dt><code>cqi_period</code><dd>Enumeration: 2, 5, 10, 20, 40, 80, 160, 1, 32, 64, 128. CQI/PMI report
+period in ms. Currently when <code>half_duplex_ue</code> is true it must be
+&gt;= 32.
+
+     <br><dt><code>m_ri</code><dd>Optional enumeration: 0, 1, 2, 4, 8, 16, 32 (default = 0). If
+different from zero, Rank Indicator (RI) reporting is done every
+<code>m_ri</code> CQI/PMI reports. RI should only be used with transmission
+modes 3 and 4.
+
+     <br><dt><code>simultaneousAckNackAndCQI</code><dd>Optional boolean (default = true). If true, enable simultaneous
+ACK/NACK and CQI reporting. With normal cyclic prefix, PUCCH format
+2A/2B are used.
+
+     <br><dt><code>simultaneousAckNackAndCQI_format3</code><dd>Optional boolean (default = false). If true, enable simultaneous
+ACK/NACK and CQI reporting with PUCCH format 3 (release 11).
+
+     <br><dt><code>srs_dedicated</code><dd>Object. SRS configuration. Currently the same for all UEs except for
+<code>srs-ConfigIndex</code> and <code>freqDomainPosition</code> which are
+dynamically allocated for each UE. The following properties are
+defined:
+
+          <dl>
+  <dt><code>srs_period</code><dd>  Enumeration: 2, 5, 10, 20, 40, 80, 160, 320. SRS period in ms. Currently when <code>half_duplex_ue</code> is true it must be &gt;= 40.
+
+          <br><dt><code>srs_bandwidth</code><dd>  Range: 0 to 3. SRS bandwidth.
+
+          <br><dt><code>srs_hopping_bandwidth</code><dd>  Range: 0 to 3. SRS hopping bandwidth.
+
+     </dl>
+
+     <br><dt><code>mac_config</code><dd>Object. MAC configuration. Currently the same for all UEs. The
+following properties are defined:
+
+          <dl>
+  <dt><code>ul_max_harq_tx</code><dd>  Maximum number of HARQ transmissions for uplink.
+
+          <br><dt><code>dl_max_harq_tx</code><dd>  Maximum number of HARQ transmissions for downlink.
+
+          <br><dt><code>ul_max_consecutive_retx</code><dd>  Optional Integer (default = 30). Maximum number of UL retransmissions
+  after which the UE is disconnected.
+
+          <br><dt><code>dl_max_consecutive_retx</code><dd>  Optional nteger (default = 30). Maximum number of DL retransmissions
+  after which the UE is disconnected.
+
+          <br><dt><code>time_alignment_tx_timer</code><dd>  Optional integer from 0 to 10240 (default = 0). Transmit the UL time
+  alignment information every <code>time_alignment_tx_timer</code> ms. The
+  value 0 means infinity.
+
+          <br><dt><code>time_alignment_timer_dedicated</code><dd>  Optional integer (default = 0). Time alignment timer dedicated. 0
+  means infinity. Note: <code>time_alignment_tx_timer</code> must be used to
+  set the UL time alignment transmission period.
+
+          <br><dt><code>periodic_bsr_timer</code><dd>  Optional integer (default = 20). Periodic BSR timer value.
+
+          <br><dt><code>retx_bsr_timer</code><dd>  Optional integer (default = 320). Retransmission BSR timer value.
+
+          <br><dt><code>periodic_phr_timer</code><dd>  Optional integer (default = 500). Periodic PHR timer value.
+
+          <br><dt><code>prohibit_phr_timer</code><dd>  Optional integer (default = 200). Prohibit PHR timer value.
+
+          <br><dt><code>phr_to_rb_offset</code><dd>  Optional float (default = 0). <code>phr_to_rb_offset</code> is added to
+  the PHR value before the eNodeB estimates the maximum number of
+  resource blocks for the uplink.
+
+          <br><dt><code>dl_path_loss_change</code><dd>  Optional enumeration: <code>dB1</code>, <code>dB3</code>, <code>dB6</code>, <code>infinity</code> (default = <code>dB3</code>). DL path loss change value.
+
+          <br><dt><code>drx_config</code><dd>  Optional object. If present, configure the DRX parameters. The
+  following properties are defined:
+
+               <dl>
+    <dt><code>on_duration_timer</code><dd>    Range: 1 to 200. DRX on duration timer (in PDCCH subframes). If
+    the value is small, it may be necessary to disallow half duplex UE
+    from connecting to the eNodeB (set <code>half_duplex_ue</code> to
+    <code>false</code>) in order to relax the constraints on the allocation
+    of SRS/CQI/SR. 
+    <br><dt><code>drx_inactivity_timer</code><dd>    Range: 1 to 2560. DRX inactivity timer (in PDCCH subframes). 
+    <br><dt><code>drx_retransmission_timer</code><dd>    Range: 1 to 33. DRX retransmission timer (in PDCCH subframes). 
+    <br><dt><code>long_drx_cycle</code><dd>    Range: 10 to 2560. Duration of the long DRX cycle (in subframes). Must be a
+    multiple of <code>mas_gap_period</code>. 
+    <br><dt><code>short_drx_cycle</code><dd>    Optional. Range: 2 to 640. If present, configuration the duration
+    of the short DRX cycle (in subframes). <code>long_drx_cycle</code> must
+    be a multiple of <code>short_drx_cycle</code>. 
+    <br><dt><code>drx_short_cycle_timer</code><dd>    Optional. Range: 1 to 16. If the short DRX cycle is
+    configured, set the short DRX cycle timer. 
+    </dl>
+
+     </dl>
+
+     <br><dt><code>cyclic_shift_dci</code><dd>Optional. Range: 0 to 7 (default = 0). Set the DCI 0 cyclic_shift_dci
+parameter.
+
+     <br><dt><code>pusch_max_mcs</code><dd>Optional. Range: 0 to 28 (default = 28). CPU load limitation: maximum
+MCS allocated by the eNodeB for PUSCH. Smaller MCS give a smaller
+bitrate and a smaller CPU load.
+
+     <br><dt><code>pusch_max_its</code><dd>Optional. Range 1 to 20 (default = 10). CPU load limitation: set the
+maximum number of iterations of the turbo decoder. A higher value
+gives a lower frame error rate but a higher CPU load.
+
+     <br><dt><code>dpc</code><dd>Optional boolean (default = false). Enable dynamic UE power control.
+
+     <br><dt><code>dpc_pusch_snr_target</code><dd>Optional float. Must be present if <code>dpc</code> is true. Set the PUSCH
+SNR target for the dynamic UE power control.
+
+     <br><dt><code>dpc_pucch_snr_target</code><dd>Optional float. Must be present if <code>dpc</code> is true. Set the PUCCH
+SNR target for the dynamic UE power control.
+
+     <br><dt><code>cipher_algo_pref</code><dd>
+Array of integers. Set the preferred algorithms for RRC and User Plane
+encryption in decreasing order of preference. If none match the UE
+capabilities, then EEA0 (no encryption) is selected.
+
+     <p>List of supported algorithms:
+          <dl>
+  <dt><code>0</code><dd>  EEA0 (no encryption)
+  <br><dt><code>1</code><dd>  EEA1 (Snow 3G)
+  <br><dt><code>2</code><dd>  EEA2 (128 bit AES)
+  </dl>
+
+     <p>If encryption is necessary, for best performance use AES (EEA2) as
+first choice if your CPU supports the AES NI Intel instruction set
+(use the <code>hwcaps</code> monitor command and see if AES is displayed). Otherwise
+use Snow3G (EEA1).
+
+     <br><dt><code>integ_algo_pref</code><dd>
+Array of integers. Set the preferred algorithms for RRC integrity
+check in decreasing order of preference. If none match the UE
+capabilities, then EIA0 (no integrity check) is selected.
+
+     <p>List of supported algorithms:
+          <dl>
+  <dt><code>0</code><dd>  EIA0 (no integrity check)
+  <br><dt><code>1</code><dd>  EIA1 (Snow 3G)
+  <br><dt><code>2</code><dd>  EIA2 (128 bit AES)
+  </dl>
+
+     <p>For best performance, use AES (EIA2) as first choice if your CPU
+supports the AES NI Intel instruction set (use the <code>hwcaps</code>
+monitor command and see if AES is displayed). Otherwise use Snow3G (EIA1).
+
+     <br><dt><code>inactivity_timer</code><dd>Integer. Send RRC connection release after this time (in ms) of
+network inactivity.
+
+     <br><dt><code>drb_config</code><dd>String or Array. Array of objects containing the DRB configuration for
+each QCI value. If a string is given, the array is read from the
+corresponding filename. See <a href="#DRB-configuration">DRB configuration</a>.
+
+     <br><dt><code>meas_config</code><dd>
+Optional string. Filename of the textual ASN.1 context (GSER syntax)
+of the <code>measConfig</code> field of the
+<code>RRCConnectionReconfiguration</code> message (see TS 36.331). It is
+used to set the parameters of the RRC measurements. If no filename is
+given, no <code>measConfig</code> field is transmitted to the UEs.
+
+     <br><dt><code>meas_gap_config</code><dd>Optional enumeration: none, gp0, gp1. Configuration of the measurement
+gap. Must be provided if <code>meas_config</code> is present.
+
+     <br><dt><code>ho_from_meas</code><dd>Optional boolean (default = false). If true, the eNodeB triggers a
+handover when the A3 RRC measurement event is received from the UE.
+
+     <br><dt><code>t304</code><dd>Enumeration: 50, 100, 150, 200, 500, 1000, 2000 (default = 1000). T304
+timer for handover.
+
+     <br><dt><code>pws_max_segment_len</code><dd>Optional integer (default = 32). Set the maximum CMAS/ETWS message
+segment length in byte. It is needed in order to limit the size of the
+corresponding SIB messages.
+
+     <br><dt><code>pws_si_periodicity</code><dd>Enumeration: 8, 16, 32, 64, 128, 256, 512 (default = 16). Set the
+periodicity (in frames) of the transmission of the CMAS/ETWS SIB
+messages.
+
+     <br><dt><code>prs</code><dd>Optional object. Contains the optional Positioning Reference Signals
+(PRS) configuration. If not present, no PRS are generated. PRS
+parameters are defined in TS 36.211 and TS 36.355.
+          <dl>
+  <dt><code>prs_bandwidth</code><dd>  Integer. Bandwidth (in Resource Blocks) of the PRS. From 6 to <code>n_rb_dl</code>. 
+  <br><dt><code>prs_period</code><dd>  Enumeration: 160, 320, 640, 1280. Give the periodicity (in
+  subframes) of the PRS. 
+  <br><dt><code>prs_offset</code><dd>  Integer (0 to prs_period - 1). Give the time offset of the PRS. 
+  <br><dt><code>numdl_frames</code><dd>  Integer: 1, 2, 4 or 6. Number of consecutive subframes in which the
+  PRS are sent. 
+  <br><dt><code>prs_muting_info</code><dd>  Optional string. Bit string containing the PRS muting pattern. Its
+  length must be 2, 4, 8 or 16. 
+  <br><dt><code>power_prs</code><dd>  Optional float (default = 0). Relative power in dB of the PRS. 
+  </dl>
+
+     <br><dt><code>mbms</code><dd>Optional object. MBMS configuration. See <a href="#MBMS-configuration">MBMS configuration</a>.
+
+     <br><dt><code>ueinfo_extension</code><dd>Optional boolean (default = false). If set, eNB will send UE information within S1AP initial UE message.<br>
+The informations are presented as a S1AP-PROTOCOL-IES item in InitialUEMessage with an ID = 1000.<br>
+Its ASN.1 definition is:
+<pre class="verbatim">     UEInformationExtension ::= SEQUENCE {
+         timing-advance      INTEGER,
+         snr                 INTEGER (0..255)
+     }
+</pre>
+
+     <p>Where:
+          <dl>
+  <dt><code>timing advance</code><dd>  UE timing advance expressed in unit of TS
+  <br><dt><code>snr</code><dd>  8 bit value representing SNR in range of -63.5 to +64 dB by step of 0.5 dB (i.e 0 is -63.5 dB and 255 is 64 dB). 
+  </dl>
+
+     <p>Example of EU initial message:
+
+     <pre class="verbatim">             initiatingMessage: {
+               procedureCode id-initialUEMessage,
+               criticality ignore,
+               value {
+                 protocolIEs {
+                   {
+                     id id-eNB-UE-S1AP-ID,
+                     criticality reject,
+                     value 1
+                   },
+                   ...
+                   {
+                     id 1000,
+                     criticality reject,
+                     value {
+                       timing-advance 1,
+                       snr 169
+                     }
+                   }
+                 }
+               }
+             }
+</pre>
+
+     <br><dt><code>rrc_redirect</code><dd>Array of strings. Each string is the filename of the textual ASN.1 content (GSER syntax) of a redirection information.<br>
+These will define redirection parameter within RRC Connection Release sent by eNB to the UE (Cf 3GPP TS 25.331) <br>
+To send this redirection, you need to send to eNB a S1AP DownlinkNASTransport message and add a S1AP-PROTOCOL-IE item with an ID of 1001 (Please refer to MME documentation and <code>attach_reject_filter</code> parameter to use it).<br>
+Its ASN.1 definition is:
+<pre class="verbatim">     UERedirectExtension ::= SEQUENCE {
+         type                INTEGER (0..255)
+     }
+</pre>
+
+     <p>Where:
+          <dl>
+  <dt><code>type</code><dd>  Index of the redirection configuration in the rrc_redirect array. 
+  </dl>
+
+     <p>Here is an example of the incoming downlink NAS transport message:
+
+     <pre class="verbatim">             initiatingMessage: {
+               procedureCode id-downlinkNASTransport,
+               criticality ignore,
+               value {
+                 protocolIEs {
+                   ...
+                   {
+                     id 1001,
+                     criticality reject,
+                     value {
+                       type 0
+                     }
+                   }
+                 }
+               }
+             }
+</pre>
+
+     <p>If <var>rrc_redirect</var> is the following: <code>["redirect.asn"]</code>.<br>
+And <var>redirect.asn</var> is:
+
+     <pre class="verbatim">     geran: {
+         startingARFCN  10,
+         bandIndicator  dcs1800,
+         followingARFCNs explicitListOfARFCNs: {12, 42}
+     }
+</pre>
+
+     <p>The UE will be sent the following RRC connection releasemessage:
+
+     <pre class="verbatim">             {
+               message c1: rrcConnectionRelease: {
+                 rrc-TransactionIdentifier 0,
+                 criticalExtensions c1: rrcConnectionRelease-r8: {
+                   releaseCause other,
+                   redirectedCarrierInfo geran: {
+                     startingARFCN 10,
+                     bandIndicator dcs1800,
+                     followingARFCNs explicitListOfARFCNs: {
+                       12,
+                       42
+                     }
+                   }
+                 }
+               }
+             }
+</pre>
+
+     <br><dt><code>scell_list</code><dd>Optional array of objects. List the cells of the same eNodeB which
+can be used for carrier aggregation. Each object contains the following fields:
+          <dl>
+  <dt><code>cell_id</code><dd>  Range: 0 to 255. Low 8 bits of the cell identifier. 
+  <br><dt><code>cross_carrier_scheduling</code><dd>  Boolean. True if cross carrier scheduling is enabled for this cell. 
+  <br><dt><code>scheduling_cell_id</code><dd>  Range: 0 to 255. If cross carrier scheduling is enabled, gives the
+  cell id on which the corresponding PDCCH is sent. 
+  <br><dt><code>ul_allowed</code><dd>  Optional boolean (default = false). If true, enable uplink for this
+  serving cell. 
+  </dl>
+
+     <br><dt><code>rate_bucket_duration</code><dd>Optional. Range 50 to 1000 (default = 100). Duration in ms for the
+average bit rate estimation. It is used to enforce the UE Aggregate
+Maximum Bit Rate and ERAB GBR Maximum Bit Rate.
+
+</dl>
+
+   <p><a name="DRB-configuration"></a>
+
+<h3 class="section"><a name="TOC67"></a>8.6 DRB configuration</h3>
+
+<p>Array of objects giving the Data Radio Bearer configuration
+for each QCI (QoS Class Identifier). There must be at least one
+definition for QCI = 9 which is the default QCI.
+
+   <p>Each object contains the following properties:
+
+     <dl>
+<dt><code>qci</code><dd>Range: 1 to 255. The following parameters apply to DRBs of this QCI.
+
+     <br><dt><code>rlc_config</code><dd>Object. Gives the RLC configuration. If UM (Unacknowledged Mode)
+is used, the <code>ul_um</code> and <code>dl_um</code> objects must be present. If
+AM (Acknowledged Mode) is used, the <code>ul_am</code> and <code>dl_am</code>
+objects must be present.
+
+          <dl>
+  <dt><code>ul_um</code><dd>  Object. Uplink RLC UM configuration.
+               <dl>
+    <dt><code>sn_FieldLength</code><dd>    Enumeration: 5, 10. Sequence number field length in bits. 
+    </dl>
+
+          <br><dt><code>dl_um</code><dd>  Object. Downlink RLC UM configuration.
+               <dl>
+    <dt><code>sn_FieldLength</code><dd>    Enumeration: 5, 10. Sequence number field length in bits. 
+    <br><dt><code>t_Reordering</code><dd>    Enumeration: 0,  5,  10,  15,  20,  25,  30,  35,  40,  45,  50,  55,  60,  65,  70,  75,  80,  85,  90,  95,  100,  110,  120,  130,  140,  150,  160,  170,  180,  190,  200. t_Reordering timer value in ms. 
+    </dl>
+
+          <br><dt><code>ul_am</code><dd>  Object. Uplink RLC AM configuration.
+
+               <dl>
+    <dt><code>t_PollRetransmit</code><dd>    Enumeration: 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175, 180, 185, 190, 195, 200, 205, 210, 215, 220, 225, 230, 235, 240, 245, 250, 300, 350, 400, 450, 500. t_PollRetransmit timer value in ms. 
+    <br><dt><code>pollPDU</code><dd>    Enumeration: 4,  8,  16,  32,  64,  128,  256,  0. pollPDU value. 
+    <br><dt><code>pollByte</code><dd>    Enumeration: 25,  50,  75,  100,  125,  250,  375,  500,  750,  1000,  1250,  1500,  2000,  3000,  0. pollByte value in kBytes. 0 means infinity. 
+    <br><dt><code>maxRetxThreshold</code><dd>    Enumeration: 1,  2,  3,  4,  6,  8,  16,  32. maxRetxThreshold value. 
+    </dl>
+
+          <br><dt><code>dl_am</code><dd>  Object. Downlink RLC AM configuration.
+               <dl>
+    <dt><code>t_Reordering</code><dd>    Enumeration: 0,  5,  10,  15,  20,  25,  30,  35,  40,  45,  50,  55,  60,  65,  70,  75,  80,  85,  90,  95,  100,  110,  120,  130,  140,  150,  160,  170,  180,  190,  200. t_Reordering timer value in ms. 
+    <br><dt><code>t_StatusProhibit</code><dd>    Enumeration:   0,  5,  10,  15,  20,  25,  30,  35,  40,  45,  50,  55,  60,  65,  70,  75,  80,  85,  90,  95,  100,  105,  110,  115,  120,  125,  130,  135,  140,  145,  150,  155,  160,  165,  170,  175,  180,  185,  190,  195,  200,  205,  210,  215,  220,  225,  230,  235,  240,  245,  250,  300,  350,  400,  450,  500. t_StatusProhibit timer value in ms. 
+    </dl>
+
+     </dl>
+
+     <br><dt><code>pdcp_config</code><dd>Object. Gives the PDCP configuration.
+          <dl>
+  <dt><code>discardTimer</code><dd>  Integer. PDCP discardTimer variable (in ms). 0 means infinity. 
+  <br><dt><code>pdcp_SN_Size</code><dd>  (UM only) Enumeration: 7, 12. pdcp sequence number size in bits. 
+  <br><dt><code>statusReportRequired</code><dd>  (AM only) Boolean. PDCP statusReportRequired variable. 
+  <br><dt><code>headerCompression</code><dd>  Optional object. If not present or <code>null</code>, header
+  compression is disabled.
+               <dl>
+      <dt><code>maxCID</code><dd>      Range: 1 to 16383. 
+      <br><dt><code>profile0x0001</code><dd>      Boolean. If true, enable RTP v1 ROHC profile. 
+      <br><dt><code>profile0x0002</code><dd>      Boolean. If true, enable UDP v1 ROHC profile. 
+      <br><dt><code>profile0x0004</code><dd>      Boolean. If true, enable IP v1 ROHC profile. 
+      </dl>
+
+     </dl>
+
+     <br><dt><code>logical_channel_config</code><dd>Object. MAC Logical channel configuration. The downlink values are
+assumed to be the same as the uplink values.
+
+          <dl>
+  <dt><code>priority</code><dd>  Range: 1 to 16. logical channel priority. Lower value has more priority. 
+  <br><dt><code>prioritisedBitRate</code><dd>  Enumeration: 0, 8, 16, 32, 64, 128, 256, -1, 512, 1024, 2048. Prioritised bit rate. -1 means infinity. 
+  <br><dt><code>bucketSizeDuration</code><dd>  Enumeration: 50, 100, 150, 300, 500, 1000. Bucket size duration in ms. 
+  <br><dt><code>logicalChannelGroup</code><dd>  Range: 0 to 3. Logical channel group to which this logical channel belongs. 
+  </dl>
+
+   </dl>
+
+   <p><a name="MBMS-configuration"></a>
+
+<h3 class="section"><a name="TOC68"></a>8.7 MBMS configuration</h3>
+
+<p>The object <code>mbms</code> gives the MBMS configuration. This
+configuration is currently static (there is no M2 nor M3 interface to
+update it). Here are the properties of the object:
+
+     <dl>
+<dt><code>sib13_periodicity</code><dd>Range: 8 to 512, power of two. Periodicity (in 10 ms frames) of the
+SIB13 retransmission. The SIB13 contain the parameters to find
+the MCCH for each MBSFN area.
+
+     <br><dt><code>area_info_list</code><dd>Array of object. Each object defines the parameters of one MBSFN area:
+          <dl>
+  <dt><code>area_id</code><dd>  Range: 0 to 255. Area identifier.
+
+          <br><dt><code>non_mbsfn_region_length</code><dd>  Enumeration: 1, 2. Number of CCH symbols. For 1.4 MHz downlink, only
+  <code>2</code> is allowed.
+
+          <br><dt><code>notification_indicator</code><dd>  Range: 0 to 7. Notification index for MCCH change notification in PDCCH.
+
+          <br><dt><code>mcch_config</code><dd>  Object. MCCH configuration:
+               <dl>
+    <dt><code>mcch_repetition_period</code><dd>    Range: 32 to 256, power of two. MCCH repetition period (in 10 ms frames). 
+    <br><dt><code>mcch_modification_period</code><dd>    Enumeration: 512, 1024. (in 10 ms frames). 
+    <br><dt><code>signalling_mcs</code><dd>    Enumeration: 2, 7, 13, 29. MCS for MCCH and MCHSI
+    transmission. MCCH and MCHSI are critical to decode the MBMS data
+    (MTCH), so their MCS should be lower than the one of the data. 
+    </dl>
+
+          <br><dt><code>mbsfn_area_configuration</code><dd>  Object. MBSFN area configuration. Most of the content of this object
+  is transmitted in the MCCH.
+               <dl>
+    <dt><code>common_sf_alloc</code><dd>    Array of object. Defines the subframes dedicated to this MBSFN
+    area. Each object has the following fields:
+                    <dl>
+      <dt><code>radio_frame_allocation_period</code><dd>      Range: 1 to 32, power of two. Allocation period (in 10 ms frames). 
+      <br><dt><code>radio_frame_allocation_offset</code><dd>      Range: 0 to 7. offset in the allocation period (in 10 ms frames). 
+      <br><dt><code>subframe_allocation</code><dd>      Bit string. Length = 6 (1 frame) or 24 (4 frames). In FDD, the
+      bits correspond to subframes 1, 2, 3, 6, 7, 8. In TDD, the bits
+      correspond to subframes 3, 4, 7, 8, 9. 
+      </dl>
+                   <br><dt><code>common_sf_alloc_period</code><dd>    Range: 4 to 256, power of two. Common subframe allocation period
+    (in 10 ms frames). The PMCH are allocated consecutively during
+        this period.
+
+               <br><dt><code>pmch_info_list</code><dd>    Array of objects. List of PMCH. Each PMCH has the following properties:
+                    <dl>
+      <dt><code>pmch_config</code><dd>      Object. PMCH physical parameters.
+                         <dl>
+        <dt><code>sf_alloc_count</code><dd>        Integer &gt;= 1. Number of subframes allocated to this PMCH per
+        common period. 
+        <br><dt><code>data_mcs</code><dd>        Range: 0 to 28. MCS used for the MBMS data (MTCH). 
+        <br><dt><code>data_mcs2</code><dd>        Optional integer. Range: 0 to 27. If provided, <code>data_mcs</code>
+        is ignored and an alternate MCS table is used to allow 256QAM
+        MBMS. Note: 256QAM MBMS is an optional release 12 feature,
+        so not all UEs can receive a PMCH using <code>data_mcs2</code>. 
+        <br><dt><code>mch_scheduling_period</code><dd>        Range: 4 to 1024, power of two. Scheduling period (in 10 ms
+        frames) for the MCH.  MCHSI is transmitted with this
+        periodicity. Must be &gt;= common_sf_alloc_period. For the first
+        PMCH, must be &lt;= mcch_repetition_period. Note: only release
+        12 UEs support the value 4, so the effective range to support
+        all UEs is 8 to 1024. 
+        </dl>
+                          <br><dt><code>mbms_session_info_list</code><dd>      Array of objects. List of sessions in this PMCH. Each session
+      has the following properties:
+                         <dl>
+        <dt><code>tmgi</code><dd>        Object. Temporary Mobile Group Identity.
+                              <dl>
+          <dt><code>plmn</code><dd>          String (5 or 6 digits). PLMN identity. 
+          <br><dt><code>service_id</code><dd>          24 bit integer. Service identity. 
+          </dl>
+                                 <br><dt><code>logical_channel_identity</code><dd>        Range: 0 to 28. MAC logical channel identity. Must be
+        different for each session in the PMCH. 0 is reserved for the
+        MCCH in the first PMCH. 
+        <br><dt><code>gtp_addr</code><dd>        String. IP address and optional port on which the GTP session
+        content is received (M1 interface). Several sessions can use
+        the same IP address provided their GTP TEID is different. It
+        is usually a multicast address. 
+        <br><dt><code>gtp_teid</code><dd>        32 bit integer (must be different from zero). GTP TEID for the
+        session data. 
+        </dl>
+                          </dl>
+
+          </dl>
+
+          <br><dt><code>notification_config</code><dd>  Object. Definition of the MCCH change notification parameters. Note:
+  the MCCH parameters are currently static so that eNodeB never
+  signals MCCH change.
+
+               <dl>
+    <dt><code>notification_repetition_coeff</code><dd>    Enumeration: 2, 4. 
+    <br><dt><code>notification_offset</code><dd>    Range: 0 to 10. 
+    <br><dt><code>notification_sf_index</code><dd>    Range: 1 to 6. 
+    </dl>
+
+     </dl>
+     </dl>
+
+   <p><a name="Remote-API"></a>
+
+<h2 class="chapter"><a name="TOC69"></a>9 Remote API</h2>
+
+<p>You can access LTEENB via a remote API.<br>
+Protocol used is WebSocket as defined in RFC 6455
+(<a href="https://tools.ietf.org/html/rfc6455">https://tools.ietf.org/html/rfc6455</a>).<br>
+
+<h3 class="section"><a name="TOC70"></a>9.1 Messages</h3>
+
+<p>Messages exchanged between client and LTEENB server are in strict JSON
+format.<br>
+
+   <p>Each message is represented by an object. Multiple message can be sent to
+server using an array of message objects.<br>
+
+   <p>Time and delay values are floating number in seconds.<br>
+
+   <p>All messages have at least following definition:
+
+     <dl>
+  <dt><code>message</code><dd>  String. Represent type of message. This parameter is mandatory and depending
+  on its value, other parameters will apply.<br>
+  If message is a response from server, response message will have same message
+  member.
+
+     <br><dt><code>message_id</code><dd>  Optional any type. If set response sent by the server to this message will
+  have same message_id. This is used to identify response as WebSocket does not
+  provide such a concept.
+
+     <br><dt><code>start_time</code><dd>  Optional double. Represent the delay before executing the message.<br>
+  If not set, the message is executed when received.<br>
+  Note that some command (<var>log_get</var>, <var>log_reset</var>, <var>config_get</var>,
+  <var>config_set</var>, <var>stats</var>) can't be executed in future.
+
+   </dl>
+
+<h3 class="section"><a name="TOC71"></a>9.2 Common messages</h3>
+
+     <dl>
+  <dt><code>config_get</code><dd>  Retreive current config.<br>
+
+     <p>Response definition:
+          <dl>
+      <dt><code>type</code><dd>      Always "ENB"
+
+          <br><dt><code>name</code><dd>      String representing server name
+
+          <p><a name="config_005fget-logs-member"></a><br><dt><code>logs</code><dd>      Object representing log configuration.<br>
+      With following elements:
+               <dl>
+          <dt><code>layers</code><dd>          Object. Each member of the object represent a log layer configuration:
+
+                    <dl>
+              <dt><code>layer name</code><dd>              Object. The member name represent log layer name and parameters are:
+
+                         <dl>
+                  <dt><code>level</code><dd>                  See <a href="#log_005foptions">log_options</a>
+                  <br><dt><code>max_size</code><dd>                  See <a href="#log_005foptions">log_options</a>
+                </dl>
+
+               </dl>
+
+               <br><dt><code>count</code><dd>          Number. Number of bufferizer logs.
+
+          </dl>
+
+          <br><dt><code>cells</code><dd>Object. Each member name/value represents cell ID/cell definition:
+               <dl>
+    <dt><code>n_rb_dl</code><dd>    Integer. Number of downlink resource blocks.
+
+               <br><dt><code>n_rb_ul</code><dd>    Integer. Number of uplink resource blocks.
+
+               <br><dt><code>dl_earfcn</code><dd>    Integer. Downlink EARFCN.
+
+          </dl>
+
+     </dl>
+
+     <br><dt><code>config_set</code><dd>  Change current config.<br>
+  Each member is optional.<br>
+  Message definition:
+          <dl>
+      <dt><code>logs</code><dd>      Object. Represent logs conficuration. Same structure as config_get (See <a href="#config_005fget-logs-member">config_get logs member</a>).<br>
+      All elements are optional.
+
+     </dl>
+
+     <br><dt><code>log_get</code><dd>  Get logs.<br>
+  Message definition:
+          <dl>
+      <dt><code>min</code><dd>      Optional number (default = 1). Minimum amount of logs to retreive.<br>
+      Response won't be sent until this limit is reached (Unless timeout occurs).
+
+          <br><dt><code>max</code><dd>      Optionnal number (default = 4096). Maximum logs sent in a response.
+
+          <br><dt><code>timeout</code><dd>      Optional number (default = 1). If at least 1 log is available and no
+      more logs have been geenrated for this time, response will be sent.
+
+          <br><dt><code>rnti</code><dd>      Optional number. If set, send only logs matching rnti.
+
+          <br><dt><code>layers</code><dd>      Optional Object. Each member name represents a log layer and values must be
+      string representing maximum level. See <a href="#log_005foptions">log_options</a>.<br>
+    </dl>
+
+     <p>Response definition:
+          <dl>
+      <dt><code>logs</code><dd>      Array. List of logs. Each item is a string representing log. See <a href="#Log-file-format">Log file format</a>
+
+          <br><dt><code>discontinuity</code><dd>      Optional number. If set, this means some logs have been discarded due to log buffer overflow. 
+    </dl>
+
+     <p>Note that only one request can be sent by client.<br>
+    If a request is sent before previous one has returned, previous one will
+    be sent without matchine min/max/timeout conditions.
+
+     <br><dt><code>log_reset</code><dd>  Resets logs buffer.
+
+     <br><dt><code>stats</code><dd>  Provides statistics.<br>
+  Every time this message is received by server, statistics are reseted.
+
+     <p>Response definition:
+          <dl>
+      <dt><code>cpu</code><dd>      Object. Each member name defines a type and its value cpu load in % of one core. 
+    </dl>
+
+</dl>
+
+<h3 class="section"><a name="TOC72"></a>9.3 Errors</h3>
+
+<p>If a message produces an error, response will have an error string field
+representing the error.
+
+<h3 class="section"><a name="TOC73"></a>9.4 Common examples</h3>
+
+     <ol type=1 start=1>
+
+     <li>Config
+          <ol type=1 start=1>
+      <li>Client sends
+<pre class="verbatim">          {
+              "message": "config_get",
+              "message_id": "foo"
+          }
+     </pre>
+
+          <li>Server replies
+<pre class="verbatim">          {
+              "message_id": "foo",
+              "message": "config_get",
+              "name": "UE",
+              "logs": {
+                  "phy": {
+                      "level": "error",
+                      "max_size": 0
+                  },
+                  ...
+                  "rrc": {
+                      "level": "debug",
+                      "max_size": 1
+                  }
+              }
+          }
+     </pre>
+
+          </ol>
+
+     <li>Error
+          <ol type=1 start=1>
+      <li>Client sends
+<pre class="verbatim">          {
+              "message": "bar",
+              "message_id": "foo"
+          }
+     </pre>
+
+          <li>Server replies
+<pre class="verbatim">          {
+              "message_id": "foo",
+              "message": "bar",
+              "error": "Unknown message: bar"
+          }
+     </pre>
+
+          </ol>
+     </ol>
+
+   <p><a name="LTE-messages"></a>
+
+<h3 class="section"><a name="TOC74"></a>9.5 LTE messages</h3>
+
+     <dl>
+  <dt><code>ue_get</code><dd>  Get ue list.<br>
+  Response definition:
+          <dl>
+      <dt><code>ue_list</code><dd>      Array of object, representing current connected UEs.<br>
+      Each element has following definition:
+               <dl>
+        <dt><code>enb_ue_id</code><dd>        Integer. eNB UE id. 
+        <br><dt><code>mme_ud_id</code><dd>        Integer. MME UE id. 
+        <br><dt><code>rnti</code><dd>        Integer. RNTI. 
+        <br><dt><code>dl_bitrate</code><dd>        Number. Downlink bitrate in bits per seconds. 
+        <br><dt><code>ul_bitrate</code><dd>        Number. Uplink bitrate in bits per seconds. 
+        <br><dt><code>dl_tx</code><dd>        Interger. Number of downlink transmitted packets (Without retransmissions). 
+        <br><dt><code>ul_tx</code><dd>        Interger. Number of uplink transmitted packets (Without retransmissions). 
+        <br><dt><code>dl_retx</code><dd>        Interger. Number of downlink retransmitted packets. 
+        <br><dt><code>ul_retx</code><dd>        Interger. Number of uplink retransmitted packets. 
+        <br><dt><code>dl_mcs</code><dd>        Number. Average downlink MCS. 
+        <br><dt><code>ul_mcs</code><dd>        Number. Average uplink MCS. 
+        <br><dt><code>turbo_decoder_min</code><dd>        Integer. Minimum turbo decoder pass. 
+        <br><dt><code>turbo_decoder_avg</code><dd>        Number. Average turbo decoder pass. 
+        <br><dt><code>turbo_decoder_max</code><dd>        Integer. Maximum turbo decoder pass.
+
+          </dl>
+              </dl>
+
+     <br><dt><code>cell_gain</code><dd>  Set cell DF RF signal gain.*
+  Message definition:
+          <dl>
+      <dt><code>cell_id</code><dd>      Interger. Cell ID. 
+      Float. Gain in dB. Must be between -200 and 0 (included). 
+    </dl>
+
+     <br><dt><code>handover</code><dd>  Message definition:
+          <dl>
+      <dt><code>enb_ue_id</code><dd>      Interger. eNB UD id. 
+      <br><dt><code>pci</code><dd>      Integer. Physical Cell ID. 
+      <br><dt><code>dl_earfcn</code><dd>      Optional integer. If set use look for cell with this earfcn, else use UE current earfcn. 
+      <br><dt><code>type</code><dd>      Optional string. Can be <code>auto</code> (default), <code>intra</code>, <code>s1</code> or <code>x2</code>. 
+    </dl>
+
+     <br><dt><code>x2</code><dd>  Get X2 peers state.<br>
+  Response definition:
+          <dl>
+      <dt><code>peers</code><dd>      Array of object. One for each peer.<br>
+      Each element has the following definition:
+               <dl>
+        <dt><code>state</code><dd>        String. Can be <code>connecting</code>, <code>connected</code> or <code>setup_done</code>. 
+        <br><dt><code>addr</code><dd>        String. Address of peer
+        <br><dt><code>cells</code><dd>        Array of object. One for each cell. 
+        Each element has the following definition:
+                    <dl>
+          <dt><code>cell_id</code><dd>          Integer. Cell ID. 
+          <br><dt><code>tac</code><dd>          Integer. TAC. 
+          <br><dt><code>dl_earfcn</code><dd>          Integer. Downlink cell EARFCN. 
+          <br><dt><code>pci</code><dd>          Integer. Physical Cell ID
+        </dl>
+                     </dl>
+              </dl>
+
+     <br><dt><code>x2connect</code><dd>  Forces connection to a X2 peer.<br>
+  Message definition
+          <dl>
+      <dt><code>addr.</code><dd>      String. X2 peer address. 
+    </dl>
+
+</dl>
+
+<h2 class="chapter"><a name="TOC75"></a>10 Command line monitor reference</h2>
+
+<p>The following commands are available:
+
+     <dl>
+<dt><code>help</code><dd>Display the help. Use <code>help </code><var>command</var> to have a more
+detailed help about a command.
+
+     <br><dt><code>t [</code><var>period</var><code>]</code><dd>Activate MAC UE and PRACH traces. All active connections are displayed
+regularly. The display is stopped when typing return. An optional
+period (in seconds) is accepted.
+
+     <br><dt><code>log [</code><var>log_options</var><code>]</code><dd>Display the current log state. If <var>log_options</var> are given, change
+the log options. The syntax is the same as the <code>log_options</code>
+configuration property.
+
+     <br><dt><code>cell</code><dd>List the available cells.
+
+     <br><dt><code>cell_gain </code><var>cell_id</var> <var>gain</var><dd>Set the DL gain of the cell <var>cell_id</var>. The gain is in dB and must
+be &lt;= 0. The gain of the other cells is not modified.
+
+     <br><dt><code>cell_ul_disable </code><var>cell_id</var> <var>flag</var><dd>Disable the uplink of the cell <var>cell_id</var> if <var>flag</var> = 1.
+
+     <br><dt><code>ue</code><dd>List connected UEs.
+
+     <br><dt><code>handover </code><var>eNB_UE_ID</var> <var>pci</var><code> [</code><var>dl_earfcn</var><code>]</code><dd>Initiate a handover of UE <var>eNB_UE_ID</var> to the cell of physical
+identifier <var>pci</var> at EARFCN <var>dl_earfcn</var>. If the EARFCN is not
+given, it is assumed to be the same as the source cell. The target
+cell must be defined in the source cell neighbour list.
+
+     <br><dt><code>tx_gain </code><var>gain</var><dd>Set the TX gain in dB of the radio driver. All cells are
+affected. Same definition as the <code>tx_gain</code> property.
+
+     <br><dt><code>rx_gain </code><var>gain</var><dd>Set the RX gain in dB of the radio driver. All cells are
+affected. Same definition as the <code>rx_gain</code> property.
+
+     <br><dt><code>pcap [</code><var>-w filename</var><code>] [</code><var>-l data_len</var><code>] [</code><var>-b</var><code>] [</code><var>-x</var><code>] [</code><var>-d ms</var><code>] [</code><var>-p</var><code>]</code><dd>Record packet data in the pcap format used by Wireshark. 
+By default data are written until a <code>pcap_stop</code> request is made. 
+To record for a fixed period of time the <var>-d</var> can be used to specify the number of
+milliseconds to capture data. 
+The remaining cmd line options mimic the control found in the config file:
+the <var>-w</var> option can be use to specify an output file name (default is <var>/tmp/enb.pcap</var>);
+the <var>-l</var> option specifies the maximum length for packet data written (default is 65535);
+the <var>-x</var> option enables writing data in the MAC-LTE extension format; and
+the <var>-b</var> option enables capture of broadcast packets on the BCCH channel. 
+the <var>-p</var> option can be set to capture into a pipe instead of a file.
+
+     <br><dt><code>pcap_stop</code><dd>Stop recording pcap packet data.
+
+     <br><dt><code>s1</code><dd>Dump the S1 connection state. It is useful to see if the eNodeB is
+connected to the MME.
+
+     <br><dt><code>s1connect [</code><var>mme_addr</var><code>]</code><dd>Force a S1 (re)connection to the MME. The MME IP address and optional
+port can be given as an optional parameter.
+
+     <br><dt><code>s1disconnect</code><dd>Force a S1 disconnect from the MME.
+
+     <br><dt><code>x2</code><dd>Display the state of the X2 connections and the associated cell
+parameters.
+
+     <br><dt><code>x2connect </code><var>peer_addr</var><dd>Force a X2 connection to eNodeB <var>peer_addr</var>.
+
+     <br><dt><code>x2disconnect </code><var>peer_addr</var><dd>Force a X2 disconnection from the eNodeB <var>peer_addr</var>.
+
+     <br><dt><code>hwcaps</code><dd>Show the CPU capabilities. Useful to see if AES acceleration is
+supported.
+
+     <br><dt><code>mbms</code><dd>Show the MBMS status. It is useful to see packet losses, the
+instantaneous bitrate of each session and the maximum bitrate allowed
+for each PMCH.
+
+   </dl>
+
+   <p><a name="Log-file-format"></a>
+
+<h2 class="chapter"><a name="TOC76"></a>11 Log file format</h2>
+
+<h3 class="section"><a name="TOC77"></a>11.1 PHY, MAC, RLC, PDCP, RRC and NAS layers</h3>
+
+<p>When a message is dumped, the format is:
+<pre class="example">     time layer - cell rnti message
+</pre>
+   <p>When a PDU is dumped (debug level), the format is:
+<pre class="example">     time layer dir cell rnti short_content
+             long_content
+</pre>
+     <dl>
+<dt><code>time</code><dd>Time using the selected format
+<br><dt><code>layer</code><dd>Indicate the layer (<code>[PHY]</code>, <code>[MAC]</code>, <code>[RLC]</code>, <code>[PDCP]</code>, <code>[RRC]</code> or <code>[NAS]</code> here). 
+<br><dt><code>dir</code><dd>UL (uplink) or DL (downlink). 
+<br><dt><code>cell</code><dd>Low 8 bits of the cell identifier (hexadecimal)
+<br><dt><code>rnti</code><dd>Associated RNTI (hexadecimal) or <code>-</code> if none. 
+<br><dt><code>short_content</code><dd>Single line content.
+          <ul>
+  <li>RLC, PDCP: preceeded by the SRB or DRB identifier. 
+  <li>PHY: preceeded by the frame number (0-1023), subframe number
+(0-9) and the physical channel name (PUSCH, PUCCH, PRACH, SRS, PSS,
+PBCH, PCFICH, PDSCH, PHICH or PDCCH). 
+  </ul>
+     <br><dt><code>long_content</code><dd>
+          <ul>
+  <li>PHY, MAC, RLC, PDCP: hexadecimal dump of the message if <code>layer.max_size &gt; 0</code>. 
+  <li>RRC: full ASN.1 content of the RRC message if <code>layer.max_size &gt; 0</code>. 
+  <li>NAS: full content of the NAS message if <code>layer.max_size &gt; 0</code>. 
+  </ul>
+     </dl>
+
+<h3 class="section"><a name="TOC78"></a>11.2 S1AP, X2AP and GTP-U layers</h3>
+
+<p>When a message is dumped, the format is:
+<pre class="example">     time layer - message
+</pre>
+   <p>When a PDU is dumped (debug level), the format is:
+<pre class="example">     time layer dir ip_address short_content
+             long_content
+</pre>
+     <dl>
+<dt><code>time</code><dd>Time using the selected format. 
+<br><dt><code>layer</code><dd>Indicate the layer (<code>[S1AP]</code> here). 
+<br><dt><code>dir</code><dd>Direction: <code>TO</code> or <code>FROM</code>. 
+<br><dt><code>ip_address</code><dd>Source or destination IP address, depending on the <code>dir</code> field. 
+<br><dt><code>short_content</code><dd>Single line content. 
+<br><dt><code>long_content</code><dd>
+          <ul>
+  <li>S1AP, X2AP: full ASN.1 content of the S1AP message if <code>layer.max_size &gt; 0</code>. 
+  <li>GTPU: hexadecimal dump of the message if <code>layer.max_size &gt; 0</code>. 
+  </ul>
+     </dl>
+
+<h2 class="chapter"><a name="TOC79"></a>12 License</h2>
+
+<p><code>lteenb</code> is copyright (c) 2012-2015 Amarisoft. Its redistribution
+without authorization is prohibited.
+
+   <p><code>lteenb</code> is available without any express or implied warranty. In
+no event will Amarisoft be held liable for any damages arising from
+the use of this software.
+
+   <p>For more information on licensing, please refer to <code>license.pdf</code> file.
+
+<h2 class="unnumbered"><a name="TOC80"></a>Abbreviations</h2>
+
+     <dl>
+<dt>APN<dd>Access Point Name
+<br><dt>CQI<dd>Channel Quality Indication
+<br><dt>DL<dd>Downlink
+<br><dt>DRB<dd>Data Radio Bearer
+<br><dt>EARFCN<dd>E-UTRA Absolute Radio Frequency Channel Number
+<br><dt>E-UTRA<dd>Evolved UMTS Terrestrial Radio Access
+<br><dt>FDD<dd>Frequency Division Duplexing
+<br><dt>HARQ<dd>Hybrid Automatic Repeat reQuest
+<br><dt>HSS<dd>Home Subscriber Server
+<br><dt>IMEI<dd>International Mobile Equipment Identity
+<br><dt>IMSI<dd>International Mobile Subscriber Identity
+<br><dt>LTE<dd>Long Term Evolution
+<br><dt>MAC<dd>Media Access Control
+<br><dt>MBSFN<dd>Multicast-Broadcast Single-Frequency Network
+<br><dt>MBMS<dd>Multimedia Broadcast Multicast Service
+<br><dt>MCC<dd>Mobile Country Code
+<br><dt>MIMO<dd>Multiple-Input Multiple-Output
+<br><dt>MME<dd>Mobility Management Entity
+<br><dt>MNC<dd>Mobile Network Code
+<br><dt>NAS<dd>Non Access Stratum
+<br><dt>PAPR<dd>Peak to Average Power Ratio
+<br><dt>PDCP<dd>Packet Data Convergence Protocol
+<br><dt>PDN<dd>Packet Data Network
+<br><dt>PLMN<dd>Public Land Mobile Network
+<br><dt>PMI<dd>Precoding Matrix Indicator
+<br><dt>PRS<dd>Positioning Reference Signals
+<br><dt>QCI<dd>QoS Class Identifier
+<br><dt>QoS<dd>Quality of Service
+<br><dt>RB<dd>Resource Block
+<br><dt>RI<dd>Rank Indicator
+<br><dt>RLC<dd>Radio Link Control
+<br><dt>ROHC<dd>Robust Header Compression
+<br><dt>RRC<dd>Radio Resource Control
+<br><dt>SIB<dd>System Information Block
+<br><dt>SISO<dd>Single-Input Single-Output
+<br><dt>TDD<dd>Time Division Duplexing
+<br><dt>TMSI<dd>Temporary Mobile Subscriber Identity
+<br><dt>UE<dd>User Equipment
+<br><dt>UL<dd>Uplink
+<br><dt>USIM<dd>Universal Subscriber Identity Module
+</dl>
+
+</body></html>
+

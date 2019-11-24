@@ -1,0 +1,22 @@
+/* This is a template file, fill it with your parameters */
+{
+  message c1: systemInformation: {
+    criticalExtensions systemInformation-r8: {
+      sib-TypeAndInfo {
+        sib6: {
+          t-ReselectionUTRA 0,
+          carrierFreqListUTRA-FDD {
+            {
+              carrierFreq 300,
+              threshX-High 0,
+              threshX-Low 0,
+              q-RxLevMin -13,
+              p-MaxUTRA 0,
+              q-QualMin 0
+            }
+          }
+        }
+      }
+    }
+  }
+}

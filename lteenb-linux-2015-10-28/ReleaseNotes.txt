@@ -1,0 +1,116 @@
+version 2015-10-28:
+
+- Added MFBI support
+- Added frequency bands 252 and 255 (LTE-U 5 GHz bands)
+- Updated RRC ASN.1 to release 12.5
+- UE category 0 fixes
+- Added support of simultaneous ACK/NACK and CQI for PUCCH 3
+- Added FDD-TDD carrier aggregation support
+- Fix GTP echo response when sequence number set
+- DRX support
+- Add log file cut and rotation mechanism
+- Fix MIMO crash (Assertion `F == 0 && C1 == 0' failed)
+- Added config/rf_select.sh script to switch between radio frontends
+- Move radio frontends configuration to subdirectories
+- Improve B2x0 configuration files
+- Fixed RRC reestablishment issue
+- Fixed GTP echo response when seq set
+- Added UHD 3.9.0 support
+- Added UE Aggregated Maximum Bitrate and Maximum Bitrate for GBR ERABs support
+
+version 2015-06-01:
+
+- MAC scheduler improvements (tested with up to 500 simultaneously active UEs)
+- Throughput improvements (Both UL and DL)
+- Improved power control
+- License does not depend on USB dongles for Fedora (License update not required)
+- Support of UHD 3.8.2
+- Additional SIB examples (sib5, sib15)
+- Fixed unnecessary retransmissions
+- Added handover to home eNodeB
+- Added home eNodeB support
+- Add log options to dump cryptographic informations
+
+version 2015-01-20:
+
+- Rename trx_uhd_3.5.4.so to trx_uhd_3.4.0.so to match ABI definition (Fedora 17)
+- Workaround for n210 bug causing PRACH burst and radio attach failure
+
+version 2014-12-29:
+
+- UHD version auto detected: symbolic link trx_uhd.so no more needed
+- UHD 3.8.0 support
+- lte_init.sh script is only for eNB, network config part has been moved to lte_init.sh in MME
+- Added Multi-band multi-cell support
+- Added carrier aggregation and cross carrier scheduling (release 10)
+- Added multi-cluster PUSCH allocation (release 10)
+- Added UE category 0 support with HD-FDD type B scheduling (release 12)
+- Added transmissions modes 7 to 10 (release 10, 11) and CSI-RS
+- Added test CoMP options (DMRS scrambling identity and QCL parameter)
+- 256QAM support for PDSCH and MBMS (release 12 draft)
+- Updated SIB ASN.1 to release 12.3 draft
+
+version 2014-09-16:
+
+- Multi-PLMN support for each cell
+- Added TDD special subframe configurations 7 and 9 from release 11
+- Added new LTE frequency bands from release 11
+- Support for release 10 TDD PUCCH 3 and channel selection
+- Updated SIB ASN.1 to release 11
+
+version 2014-07-10:
+
+- IPv6 support in lte_init.sh (./lte_init.sh <ifname> [ipv6])
+
+version 2014-06-16:
+
+- Improved JSON syntax (include, merge...)
+- UE information extension
+- RRC Connection release redirection support
+- Removed TDD crash
+- Compatibility with UHD 3.7.1 driver
+
+version 2014-04-11:
+
+- Wireshark MAC-LTE capture
+- AVX2 support
+- Improved UE category support
+- MBMS support
+- Multi-PLMN and multi-MME support
+
+version 2013-12-09:
+
+- TDD support
+- Handover fixes
+- Experimental support of the B200/B210 boards
+- PRS support
+
+version 2013-09-07:
+
+- ROHC support
+- Custom frequency band support
+- MIMO fixes
+- Lower CPU usage
+- Better support of power limited UEs
+- PAPR reduction option
+- Public Warning System (CMAS/ETWS) support
+- Upgrade to UHD driver version 3.5.3
+
+version 2013-05-28:
+
+- Per QCI DRB configuration
+- Fixed network configuration to increase maximum DL speed
+- Fixed S1AP and X2AP SCTP stream identifiers
+- Added 'tx_gain_offset' option for digital gain. Increased it from -20
+  dB to -11 dB.
+- Reduced out of spectrum emissions for bandwidths <= 10 MHz.
+
+version 2013-04-22:
+
+- 1.4 and 3 MHz bandwidth support
+- Preliminary 2x2 MIMO support (<=5 MHz only)
+- Closed-loop UE power control
+- RRC measurement and automatic handover support
+- Dynamic ERAB setup
+- AES integrity check fix when using x86 hardware acceleration
+

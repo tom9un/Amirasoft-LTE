@@ -1,0 +1,42 @@
+{
+  message c1: systemInformationBlockType1: {
+    cellAccessRelatedInfo {
+      plmn-IdentityList {
+        {
+          plmn-Identity {  /* patched by eNB */
+            mcc {
+              0,
+              0,
+              0
+            },
+            mnc {
+              0,
+              0
+            }
+          },
+          cellReservedForOperatorUse notReserved
+        }
+      },
+      trackingAreaCode '0000'H, /* patched by eNB */
+      cellIdentity '0000000'H, /* patched by eNB */
+      cellBarred notBarred,
+      intraFreqReselection allowed,
+      csg-Indication FALSE
+    },
+    cellSelectionInfo {
+      q-RxLevMin -70
+    },
+    p-Max 10, /* maximum power allowed for the UE (dBm) */
+    freqBandIndicator 1, /* patched by eNB */
+    schedulingInfoList {
+      {
+        si-Periodicity rf16,
+        sib-MappingInfo {
+          sibType3
+        }
+      }
+    },
+    si-WindowLength ms40,
+    systemInfoValueTag 8
+  }
+}

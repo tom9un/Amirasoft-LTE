@@ -1,0 +1,20 @@
+/* This is a template file, fill it with your parameters */
+{
+  message c1: systemInformation: {
+    criticalExtensions systemInformation-r8: {
+      sib-TypeAndInfo {
+        sib15-v1130: {
+          mbms-SAI-IntraFreq-r11 {
+            2
+          },
+          mbms-SAI-InterFreqList-r11 {
+            {
+              dl-CarrierFreq-r11 300,
+              mbms-SAI-List-r11 { 1 }
+            }
+          }
+        }
+      }
+    }
+  }
+}
