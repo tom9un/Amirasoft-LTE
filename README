@@ -1,0 +1,117 @@
+========================================
+= To install Amarisoft LTE 2015-10-28 =
+========================================
+
+1) Introduction
+---------------
+
+    * This script will install Amarisoft components (eNB, MME, MBMSGW, WWW and
+        OTS tools).
+
+    * Components will be installed under /root/ (See 3 to change it) except WWW
+        that will be placed in /var/www/html (Fedora) or /var/www (Ubuntu).
+
+    * The OTS installation will create a service that will launch the software
+        automatically at startup (See 4).
+
+    * For OTS and/or WWW, you should have an internet connection available as
+        install.sh script will try to install new packages.
+
+    * Note that after installation, you'll need to update your configuration
+        files (enb.cfg, mme.cfg...) manually.
+
+
+2) Prerequisite
+---------------
+
+    * You have already installed once Amarisoft LTE softwares using
+        documentation (This won't install UHD drivers) or you have an OTS
+        installation.
+
+    * You must be root.
+
+    * You need (Fedora >= 19) or Ubuntu (>= 12.04) Linux distribution.
+
+
+3) Procedure
+------------
+
+    Remove tarballs (<file>.tar.gz) you dont want to install from this directory.
+
+    Then execute install.sh with root access.
+
+    By default, softwares are installed in /root, you can choose other
+    destination by specifying first parameter:
+        ./install.sh <path>
+
+
+4) OTS
+------
+
+    The OTS service will start LTE components (If present): eNB, MME and MBMS.
+    Here is how you can handle them manually:
+
+    Fedora:
+        You can start/stop all components with those commands (as root):
+        > service lte stop
+        > service lte start
+
+        If you have changed a config file, you just need:
+        > service lte restart
+
+        To disable service start at boot time:
+        > systemctl disable lte
+
+        To enable service start at boot time:
+        > systemctl enable lte
+
+    Ubuntu:
+        You can start/stop all components with those commands:
+        > sudo /etc/init.d/lte.d stop
+        > sudo /etc/init.d/lte.d start
+
+        If you have changed a config file, you just need:
+        > sudo /etc/init.d/lte.d restart
+
+    Default configuration file can be found at: /etc/ltestart.conf.
+    Please don't change it as it will be overriden at next release install.
+    However, you can override configuration by creating following file:
+        /root/.lte
+
+    To access components monitors, use screen command:
+        > screen -x lte
+
+    Inside screen, you can switch between component windows by typing:
+        ctrl+a <window>
+
+    By default:
+        ctrl+a 0 => MME
+        ctrl+a 1 => eNB
+        ctrl+a 2 => MBMS
+
+        ctrl+a <space> will switch to next window
+
+    eNB:
+        The eNB software is started with /root/enb/config/enb.cfg file by default
+        => To update config, replace this file (or create a symlink) and restart lte service
+
+    MME:
+        The MME software is started with /root/mme/config/mme.cfg file by default
+        => To update config, replace this file (or create a symlink) and restart lte service
+
+
+5) WWW
+------
+
+    You will have access to Web tool on this URL:
+        http://<my IP>/lte/
+
+
+6) TRX
+------
+
+    You may have been provided a specific TRX driver for eNB.
+    If so, this installation process will update eNB configuration
+    and trx driver.
+    This imply your hardware is compatible with the TRX version.
+
